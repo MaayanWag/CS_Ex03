@@ -31,5 +31,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="eFuelType.cs" />
+    <Compile Include="Garage.cs" />
+    <Compile Include="eVehicleState.cs" />
+    <Compile Include="VehicleAndOwnerDetails.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
