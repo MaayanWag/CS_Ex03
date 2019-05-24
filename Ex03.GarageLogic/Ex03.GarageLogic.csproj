@@ -32,18 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Car.cs" />
-    <Compile Include="eCarColor.cs" />
-    <Compile Include="eFuelType.cs" />
-    <Compile Include="eLicenseType.cs" />
-    <Compile Include="eNumberOfDoors.cs" />
-    <Compile Include="Garage.cs" />
-    <Compile Include="eVehicleState.cs" />
-    <Compile Include="Motorcycle.cs" />
-    <Compile Include="Truck.cs" />
-    <Compile Include="Vehicle.cs" />
-    <Compile Include="VehicleAndOwnerDetails.cs" />
-    <Compile Include="Wheel.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="Vehicls\Car.cs" />
+    <Compile Include="Enums\eCarColor.cs" />
+    <Compile Include="Enums\eFuelType.cs" />
+    <Compile Include="Vehicls\ElectricVehicle.cs" />
+    <Compile Include="Enums\eLicenseType.cs" />
+    <Compile Include="Enums\eNumberOfDoors.cs" />
+    <Compile Include="Enums\eVhicleType.cs" />
+    <Compile Include="Garage\Garage.cs" />
+    <Compile Include="Enums\eVehicleState.cs" />
+    <Compile Include="Vehicls\Motorcycle.cs" />
+    <Compile Include="Vehicls\FuelBasedVehicle.cs" />
+    <Compile Include="Vehicls\Truck.cs" />
+    <Compile Include="Vehicls\Vehicle.cs" />
+    <Compile Include="Garage\VehicleAndOwnerDetails.cs" />
+    <Compile Include="Vehicls\Wheel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

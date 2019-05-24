@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal abstract class Car : Vehicle
+    public enum eVehicleType
     {
-        private eCarColor m_CarColor;
-
+        Electric,
+        FuelBased
     }
 }
