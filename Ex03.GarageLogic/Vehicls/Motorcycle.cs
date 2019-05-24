@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         #region Properties
 
         private FuelBasedVehicle m_FuelBasedMotorcycle = null;
-        private ElectricVehicle m_ElectricMotorcycle = null;
+        private ElectricVehicle m_ElectricVehicle = null;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
@@ -19,10 +19,10 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Motorcycle(FuelBasedVehicle i_FuelBasedVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
-            base(i_FuelBasedVehicle.ModelName, i_FuelBasedVehicle.LicenceNumber, i_FuelBasedVehicle.Wheels, i_FuelBasedVehicle.VehicleType)
+        public Motorcycle(FuelBasedVehicle iFuelBasedVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
+            base(iFuelBasedVehicle.ModelName, iFuelBasedVehicle.LicenceNumber, iFuelBasedVehicle.Wheels, iFuelBasedVehicle.VehicleType)
         {
-            m_FuelBasedMotorcycle = i_FuelBasedVehicle;
+            m_FuelBasedMotorcycle = iFuelBasedVehicle;
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
         }
@@ -73,10 +73,10 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Motorcycle(ElectricVehicle i_ElectricVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
-            base(i_ElectricVehicle.ModelName, i_ElectricVehicle.LicenceNumber, i_ElectricVehicle.Wheels, i_ElectricVehicle.VehicleType)
+        public Motorcycle(ElectricVehicle iElectricVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
+            base(iElectricVehicle.ModelName, iElectricVehicle.LicenceNumber, iElectricVehicle.Wheels, iElectricVehicle.VehicleType)
         {
-            m_ElectricMotorcycle = i_ElectricVehicle;
+            m_ElectricVehicle = iElectricVehicle;
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
         }
@@ -87,13 +87,13 @@ namespace Ex03.GarageLogic
 
         public float CurrentBatteryTime
         {
-            get { return m_ElectricMotorcycle.CurrentBatteryTime; }
-            set { m_ElectricMotorcycle.CurrentBatteryTime = value; }
+            get { return m_ElectricVehicle.CurrentBatteryTime; }
+            set { m_ElectricVehicle.CurrentBatteryTime = value; }
         }
 
         public float MaxBatteryTIme
         {
-            get { return m_ElectricMotorcycle.MaxBatteryTIme; }
+            get { return m_ElectricVehicle.MaxBatteryTIme; }
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace Ex03.GarageLogic
         {
             if (m_VehicleType == eVehicleType.Electric)
             {
-                m_ElectricMotorcycle.ChargeBattery(i_ChargingTime);
+                m_ElectricVehicle.ChargeBattery(i_ChargingTime);
             }
             else
             {
@@ -145,7 +145,7 @@ namespace Ex03.GarageLogic
             }
             else if (VehicleType == eVehicleType.Electric)
             {
-                remainingEnergy = m_ElectricMotorcycle.CalcRemainingEnergy();
+                remainingEnergy = m_ElectricVehicle.CalcRemainingEnergy();
             }
 
             return remainingEnergy;

@@ -58,9 +58,36 @@ namespace Ex03.GarageLogic
 
         #endregion
 
+        #region Methods
+        
         #region Abstract Methods
 
         public abstract float CalcRemainingEnergy();
+
+        #endregion
+
+        #region Object Overide Methods
+
+        public override bool Equals(object obj)
+        {
+            // TODO: is it the right comparing logic?
+            bool isEqual = false;
+            Vehicle toCompare = obj as Vehicle;
+
+            if (toCompare != null)
+            {
+                isEqual = this.LicenceNumber == toCompare.LicenceNumber;
+            }
+
+            return isEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            return LicenceNumber.GetHashCode();
+        }
+
+        #endregion
 
         #endregion
     }
