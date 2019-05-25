@@ -5,19 +5,21 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal class Car : Vehicle
+    public class Car : Vehicle
     {
         #region Properties
         private FuelBasedVehicle m_FuelBasedCar = null;
         private ElectricVehicle m_ElectricCar = null;
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;
+        private const int k_NumberOfWheels = 4;
+
         #endregion
 
         #region FuelBased
 
         #region Constructors
-        
+
         public Car(FuelBasedVehicle i_FuelBasedVehicle, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors) :
             base(i_FuelBasedVehicle.ModelName, i_FuelBasedVehicle.LicenceNumber, i_FuelBasedVehicle.Wheels, i_FuelBasedVehicle.VehicleType)
         {

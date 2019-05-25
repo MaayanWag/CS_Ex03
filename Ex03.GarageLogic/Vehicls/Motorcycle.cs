@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal abstract class Motorcycle : Vehicle
+    public class Motorcycle : Vehicle
     {
         #region Properties
 
@@ -12,17 +12,18 @@ namespace Ex03.GarageLogic
         private ElectricVehicle m_ElectricVehicle = null;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
+        private const int k_NumberOfWheels = 2;
 
         #endregion
-        
+
         #region FuelBased
 
         #region Constructors
 
-        public Motorcycle(FuelBasedVehicle iFuelBasedVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
-            base(iFuelBasedVehicle.ModelName, iFuelBasedVehicle.LicenceNumber, iFuelBasedVehicle.Wheels, iFuelBasedVehicle.VehicleType)
+        public Motorcycle(FuelBasedVehicle i_FuelBasedVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
+            base(i_FuelBasedVehicle.ModelName, i_FuelBasedVehicle.LicenceNumber, i_FuelBasedVehicle.Wheels, i_FuelBasedVehicle.VehicleType)
         {
-            m_FuelBasedMotorcycle = iFuelBasedVehicle;
+            m_FuelBasedMotorcycle = i_FuelBasedVehicle;
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
         }
@@ -73,10 +74,16 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Motorcycle(ElectricVehicle iElectricVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
-            base(iElectricVehicle.ModelName, iElectricVehicle.LicenceNumber, iElectricVehicle.Wheels, iElectricVehicle.VehicleType)
+        public Motorcycle(ElectricVehicle i_ElectricVehicle, eLicenseType i_LicenseType, int i_EngineVolume) :
+            base(i_ElectricVehicle.ModelName, i_ElectricVehicle.LicenceNumber, i_ElectricVehicle.Wheels, i_ElectricVehicle.VehicleType)
         {
-            m_ElectricVehicle = iElectricVehicle;
+            if (i_ElectricVehicle.Wheels.Length != k_NumberOfWheels)
+            {
+                // TODO: add the right Exception
+                throw new Exception("Invlaid argument");
+            }
+
+            m_ElectricVehicle = i_ElectricVehicle;
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
         }

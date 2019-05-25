@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GarageMain.cs" />
+    <Compile Include="Garage\VehicleAndOwnerDetails.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Vehicls\Car.cs" />
     <Compile Include="Enums\eCarColor.cs" />
@@ -46,7 +48,6 @@
     <Compile Include="Vehicls\FuelBasedVehicle.cs" />
     <Compile Include="Vehicls\Truck.cs" />
     <Compile Include="Vehicls\Vehicle.cs" />
-    <Compile Include="Garage\VehicleAndOwnerDetails.cs" />
     <Compile Include="Vehicls\Wheel.cs" />
   </ItemGroup>
   <ItemGroup />
