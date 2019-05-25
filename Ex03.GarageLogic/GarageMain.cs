@@ -72,8 +72,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                // TODO: change Exception
-                throw new Exception("Not a valid Vehicle!");
+                throw new ArgumentException("Not a valid Vehicle! Should be fuel based or electric based only.");
             }
 
             newCar = new Car(i_VehicleType, i_CarColor, i_NumberOfDoors);
@@ -138,19 +137,22 @@ namespace Ex03.GarageLogic
 
         private static void electricCarParamsAreValid(Wheel[] i_Wheels, float i_MaxBatteryTime)
         {
-            bool carParamsValid = true;
-
             foreach (Wheel wheel in i_Wheels)
             {
-                carParamsValid &= wheel.MaxAirPressure == k_ElectricCarValidMaxAirPressure;
+                if (wheel.MaxAirPressure != k_ElectricCarValidMaxAirPressure)
+                {
+                    throw new ArgumentException($"Invalid air pressure: {wheel.MaxAirPressure}. The garage supports only {k_ElectricCarValidMaxAirPressure} air pressure.");
+                }
             }
 
-            carParamsValid &= i_Wheels.Length == k_ElectricCarValidNumberOfWheels;
-            carParamsValid &= i_MaxBatteryTime == k_ElectricCarValidMaxBatteryTime;
-            if (!carParamsValid)
+            if (i_Wheels.Length != k_ElectricCarValidNumberOfWheels)
             {
-                //TODO: Create Exception
-                throw new Exception();
+                throw new ArgumentException($"Invalid wheels amount: {i_Wheels.Length}. The garage supports only {k_ElectricCarValidNumberOfWheels} wheel amount.");
+            }
+
+            if (i_MaxBatteryTime != k_ElectricCarValidMaxBatteryTime)
+            {
+                throw new ArgumentException($"Invalid Max battery life: {i_MaxBatteryTime}. The garage supports only {k_ElectricCarValidMaxBatteryTime} battery life.");
             }
         }
 

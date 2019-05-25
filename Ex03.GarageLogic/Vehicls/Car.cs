@@ -61,8 +61,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                // TODO: Throw Exception If needed
-                throw new NotImplementedException();
+                throw new ArgumentException();
             }
         }
 
@@ -149,7 +148,7 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder carString = new StringBuilder();
-            
+
             carString.Append(base.ToString());
             carString.AppendLine();
             if (m_FuelBasedCar != null)
@@ -166,7 +165,7 @@ namespace Ex03.GarageLogic
             carString.Append(CarColor);
             carString.Append(", Number of doors - ");
             carString.Append(NumberOfDoors);
-            
+
             return carString.ToString();
         }
 

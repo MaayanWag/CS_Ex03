@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Services;
 using System.Text;
 using Ex03.GarageLogic;
 using Ex03.GarageLogic.Enums;
-using GarageMain = Ex03.GarageLogic;
+using GarageLogic = Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI.Windows
 {
@@ -26,7 +27,6 @@ namespace Ex03.ConsoleUI.Windows
         private int m_MotorcycleEngineVolume;
         private int m_TruckCargoVolume;
         private float m_MaxBatteryAmount;
-        private Vehicle m_Vehicle;
         private Wheel[] m_Wheels;
         private float m_MaxFuelAmount;
         private bool m_IsInputValid = false;
@@ -394,17 +394,24 @@ namespace Ex03.ConsoleUI.Windows
 
         private void createNewTruck()
         {
-            Wheel truckWheel = new Wheel(m_WheelManufacturer, m_WheelMaxAirPressure);
-
-            m_Wheels = new Wheel[12];
-            for (int i = 0; i < 12; i++)
+            try
             {
-                m_Wheels[i] = truckWheel;
-            }
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 12);
+                
+                FuelBasedVehicle fuelBasedVehicle =
+                    GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                Truck newTruck = GarageMain.CreateTruck(fuelBasedVehicle, m_IsContainsDangerousMaterials, m_TruckCargoVolume);
 
-            FuelBasedVehicle fuelBasedVehicle = new FuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-            Truck newTruck = new Truck(fuelBasedVehicle, m_IsContainsDangerousMaterials, m_TruckCargoVolume);
-            Garage.AddNewVehicle(newTruck, m_OwnerName, m_OwnerPhoneNumber);
+
+                Garage.AddNewVehicle(newTruck, m_OwnerName, m_OwnerPhoneNumber);
+            }
+            catch (ArgumentException ae)
+            {
+                Console.WriteLine(ae.Message);
+                Console.WriteLine("Press enter to continue");
+                Console.ReadLine();
+                GarageConsoleUi.MainWindow();
+            }
         }
 
         private void insertMotorcycleWindow()
@@ -448,28 +455,34 @@ namespace Ex03.ConsoleUI.Windows
 
         private void createNewMotorcycle()
         {
-            Wheel motorcycleWheel = new Wheel(m_WheelManufacturer, m_WheelMaxAirPressure);
-
-            m_Wheels = new Wheel[2];
-            for (int i = 0; i < 2; i++)
+            try
             {
-                m_Wheels[i] = motorcycleWheel;
-            }
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 2);
+                Motorcycle newMotorcycle = null;
 
-            if (m_VehicleType == eVehicleType.FuelBased)
-            {
-                FuelBasedVehicle fuelBasedVehicle =
-                    new FuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-                Motorcycle newMotorcycle = new Motorcycle(fuelBasedVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
+                if (m_VehicleType == eVehicleType.FuelBased)
+                {
+                    FuelBasedVehicle fuelBasedVehicle =
+                        GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                    newMotorcycle = GarageMain.CreateMotorcycle(fuelBasedVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
+                }
+
+                if (m_VehicleType == eVehicleType.Electric)
+                {
+                    ElectricVehicle electricVehicle =
+                        GarageMain.CreateElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
+                    newMotorcycle = GarageMain.CreateMotorcycle(electricVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
+
+                }
+                
                 Garage.AddNewVehicle(newMotorcycle, m_OwnerName, m_OwnerPhoneNumber);
             }
-
-            if (m_VehicleType == eVehicleType.Electric)
+            catch (ArgumentException ae)
             {
-                ElectricVehicle electricVehicle =
-                    new ElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
-                Motorcycle newMotorcycle = new Motorcycle(electricVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
-                Garage.AddNewVehicle(newMotorcycle, m_OwnerName, m_OwnerPhoneNumber);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine("Press enter to continue");
+                Console.ReadLine();
+                GarageConsoleUi.MainWindow();
             }
         }
 
@@ -514,28 +527,33 @@ namespace Ex03.ConsoleUI.Windows
 
         private void createNewCar()
         {
-            Wheel carWheel = new Wheel(m_WheelManufacturer, m_WheelMaxAirPressure);
-
-            m_Wheels = new Wheel[4];
-            for (int i = 0; i < 4; i++)
+            try
             {
-                m_Wheels[i] = carWheel;
-            }
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 4);
+                Car newCar = null;
+                
+                if (m_VehicleType == eVehicleType.FuelBased)
+                {
+                    FuelBasedVehicle fuelBasedVehicle =
+                        GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                    newCar = GarageMain.CreateCar(fuelBasedVehicle, m_CarColor, m_CarNumberOfDoors);
+                }
 
-            if (m_VehicleType == eVehicleType.FuelBased)
-            {
-                FuelBasedVehicle fuelBasedVehicle =
-                    new FuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-                Car newCar = new Car(fuelBasedVehicle, m_CarColor, m_CarNumberOfDoors);
+                if (m_VehicleType == eVehicleType.Electric)
+                {
+                    ElectricVehicle electricVehicle =
+                        GarageMain.CreateElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
+                    newCar = GarageMain.CreateCar(electricVehicle, m_CarColor, m_CarNumberOfDoors);
+                }
+
                 Garage.AddNewVehicle(newCar, m_OwnerName, m_OwnerPhoneNumber);
             }
-
-            if (m_VehicleType == eVehicleType.Electric)
+            catch (ArgumentException ae)
             {
-                ElectricVehicle electricVehicle =
-                    new ElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
-                Car newCar = new Car(electricVehicle, m_CarColor, m_CarNumberOfDoors);
-                Garage.AddNewVehicle(newCar, m_OwnerName, m_OwnerPhoneNumber);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine("press enter to continue");
+                Console.ReadLine();
+                GarageConsoleUi.MainWindow();
             }
         }
 

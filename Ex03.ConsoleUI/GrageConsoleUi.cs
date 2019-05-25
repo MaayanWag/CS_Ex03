@@ -10,7 +10,7 @@ namespace Ex03.ConsoleUI
     {
         #region Main
         
-        public static void StartGarage()
+        public static void MainWindow()
         {
             Console.Clear();
             GarageMain.RunGarageSystem();
