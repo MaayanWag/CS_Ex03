@@ -12,22 +12,23 @@ namespace Ex03.GarageLogic
         private ElectricVehicle m_ElectricCar = null;
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;
-        private const int k_NumberOfWheels = 4;
+
+        #endregion
+
+        #region Constructors
+
+        public Car(Vehicle i_Vehicle, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors) :
+            base(i_Vehicle.ModelName, i_Vehicle.LicenceNumber, i_Vehicle.Wheels, i_Vehicle.VehicleType)
+        {
+            m_CarColor = i_CarColor;
+            m_NumberOfDoors = i_NumberOfDoors;
+            m_FuelBasedCar = i_Vehicle as FuelBasedVehicle;
+            m_ElectricCar = i_Vehicle as ElectricVehicle;
+        }
 
         #endregion
 
         #region FuelBased
-
-        #region Constructors
-
-        public Car(FuelBasedVehicle i_FuelBasedVehicle, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors) :
-            base(i_FuelBasedVehicle.ModelName, i_FuelBasedVehicle.LicenceNumber, i_FuelBasedVehicle.Wheels, i_FuelBasedVehicle.VehicleType)
-        {
-            m_FuelBasedCar = i_FuelBasedVehicle;
-            m_CarColor = i_CarColor;
-            m_NumberOfDoors = i_NumberOfDoors;
-        }
-        #endregion
 
         #region Getters And Setters
 
@@ -70,18 +71,6 @@ namespace Ex03.GarageLogic
         #endregion FuelBased
 
         #region Electric
-
-        #region Constructors
-
-        public Car(ElectricVehicle i_ElectricVehicle, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors) :
-            base(i_ElectricVehicle.ModelName, i_ElectricVehicle.LicenceNumber, i_ElectricVehicle.Wheels, i_ElectricVehicle.VehicleType)
-        {
-            m_ElectricCar = i_ElectricVehicle;
-            m_CarColor = i_CarColor;
-            m_NumberOfDoors = i_NumberOfDoors;
-        }
-
-        #endregion
 
         #region Getters And Setters
 
