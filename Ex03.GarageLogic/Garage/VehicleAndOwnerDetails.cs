@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal class VehicleAndOwnerDetailsByLicensePlate
+    internal class VehicleAndOwnerDetails
     {
         #region Properties
 
@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public VehicleAndOwnerDetailsByLicensePlate(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
+        public VehicleAndOwnerDetails(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
         {
             m_Vehicle = i_Vehicle;
             m_OwnerName = i_OwnerName;

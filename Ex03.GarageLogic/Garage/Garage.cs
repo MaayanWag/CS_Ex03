@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic
     {
         #region Properties
 
-        private Dictionary<string, VehicleAndOwnerDetailsByLicensePlate> m_GarageVehicles = 
-            new Dictionary<string, VehicleAndOwnerDetailsByLicensePlate>();
+        private Dictionary<string, VehicleAndOwnerDetails> m_GarageVehicles = 
+            new Dictionary<string, VehicleAndOwnerDetails>();
 
         #endregion
 
@@ -19,10 +19,10 @@ namespace Ex03.GarageLogic
         {
             // TODO: appropriate msg? (pdf)
             chackIfVehicleIsValid(i_Vehicle);
-            if (!isVehicleInsideThaGarage(i_Vehicle))
+            if (!isVehicleInsideTheGarage(i_Vehicle))
             {
-                VehicleAndOwnerDetailsByLicensePlate newVehicleAndOwnerDetailsByLicensePlate = 
-                    new VehicleAndOwnerDetailsByLicensePlate(i_Vehicle, i_OwnerName, i_OwnerPhoneNumber);
+                VehicleAndOwnerDetails newVehicleAndOwnerDetailsByLicensePlate = 
+                    new VehicleAndOwnerDetails(i_Vehicle, i_OwnerName, i_OwnerPhoneNumber);
                 m_GarageVehicles.Add(i_Vehicle.LicenceNumber, newVehicleAndOwnerDetailsByLicensePlate);
             }
             else
@@ -38,7 +38,7 @@ namespace Ex03.GarageLogic
 
         private void updateVehicleAndOwnerDetails(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
         {
-            VehicleAndOwnerDetailsByLicensePlate vehicleAndOwnerDetailsByLicensePlateToUpdate = m_GarageVehicles[i_Vehicle.LicenceNumber];
+            VehicleAndOwnerDetails vehicleAndOwnerDetailsByLicensePlateToUpdate = m_GarageVehicles[i_Vehicle.LicenceNumber];
             vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerVehicleState = eVehicleState.InRepair;
             vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerName = i_OwnerName;
             vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerPhoneNumber = i_OwnerPhoneNumber;
@@ -51,30 +51,23 @@ namespace Ex03.GarageLogic
         public List<string> GetAllVehicleLicensePlatesByFilter(params eVehicleState[] i_VehicleStatesToFilter)
         {
             List<string> filteredLicensePlates = new List<string>();
-            List<VehicleAndOwnerDetailsByLicensePlate> vehicleAndOwnerDetailses = getVehicleAndOwnerDetailes();
-
-            if (i_VehicleStatesToFilter.Length > 0)
-            {
-                filterVehiclesLicensePlates(vehicleAndOwnerDetailses, i_VehicleStatesToFilter, filteredLicensePlates);
-            }
-
+            List<VehicleAndOwnerDetails> vehicleAndOwnerDetails = getVehicleAndOwnerDetails();
+            
+            filterVehiclesLicensePlates(vehicleAndOwnerDetails, i_VehicleStatesToFilter, filteredLicensePlates);
+            
             return filteredLicensePlates;
         }
 
-        private void filterVehiclesLicensePlates(List<VehicleAndOwnerDetailsByLicensePlate> i_VehicleAndOwnerDetailses, 
+        private void filterVehiclesLicensePlates(List<VehicleAndOwnerDetails> i_VehicleAndOwnerDetails, 
             eVehicleState[] i_VehicleStatesToFilter, List<string> i_FilteredLicensePlates)
         {
-            foreach (VehicleAndOwnerDetailsByLicensePlate vehicleAndOwnerDetailse in i_VehicleAndOwnerDetailses)
+            foreach (VehicleAndOwnerDetails vehicleAndOwnerDetails in i_VehicleAndOwnerDetails)
             {
-                eVehicleState vehicleState = vehicleAndOwnerDetailse.OwnerVehicleState;
+                eVehicleState vehicleState = vehicleAndOwnerDetails.OwnerVehicleState;
 
-                if (!(Array.IndexOf(i_VehicleStatesToFilter, vehicleState) > -1))
+                if (Array.IndexOf(i_VehicleStatesToFilter, vehicleState) > -1)
                 {
-                    i_VehicleAndOwnerDetailses.Remove(vehicleAndOwnerDetailse);
-                }
-                else
-                {
-                    i_FilteredLicensePlates.Add(vehicleAndOwnerDetailse.Vehicle.LicenceNumber);
+                    i_FilteredLicensePlates.Add(vehicleAndOwnerDetails.Vehicle.LicenceNumber);
                 }
             }
         }
@@ -160,9 +153,9 @@ namespace Ex03.GarageLogic
 
         #region General Helper Methods
         
-        private VehicleAndOwnerDetailsByLicensePlate getVehicleDetailesByLicensePlate(string i_LicensePlateNumber)
+        private VehicleAndOwnerDetails getVehicleDetailesByLicensePlate(string i_LicensePlateNumber)
         {
-            VehicleAndOwnerDetailsByLicensePlate vehicleAndOwnerDetailsByLicensePlate = null;
+            VehicleAndOwnerDetails vehicleAndOwnerDetailsByLicensePlate = null;
 
             try
             {
@@ -177,17 +170,17 @@ namespace Ex03.GarageLogic
             return vehicleAndOwnerDetailsByLicensePlate;
         }
 
-        private List<VehicleAndOwnerDetailsByLicensePlate> getVehicleAndOwnerDetailes()
+        private List<VehicleAndOwnerDetails> getVehicleAndOwnerDetails()
         {
-            List<VehicleAndOwnerDetailsByLicensePlate> vehicleAndOwnerDetailses = new List<VehicleAndOwnerDetailsByLicensePlate>();
+            List<VehicleAndOwnerDetails> vehicleAndOwnerDetails = new List<VehicleAndOwnerDetails>();
             List<Vehicle> garageVehicles = getGarageVehiclesAsList();
 
             foreach (Vehicle vehicleKey in garageVehicles)
             {
-                vehicleAndOwnerDetailses.Add(m_GarageVehicles[vehicleKey.LicenceNumber]);
+                vehicleAndOwnerDetails.Add(m_GarageVehicles[vehicleKey.LicenceNumber]);
             }
 
-            return vehicleAndOwnerDetailses;
+            return vehicleAndOwnerDetails;
         }
 
         private Vehicle getVehicleByLicensePlate(string i_LicensePlateNumber)
@@ -200,15 +193,15 @@ namespace Ex03.GarageLogic
             List<Vehicle> garageVehicles = new List<Vehicle>();
             List<string> garageLicensePlates = new List<string>(m_GarageVehicles.Keys);
 
-            foreach (string licensePLate in garageLicensePlates)
+            foreach (string licensePlate in garageLicensePlates)
             {
-                garageVehicles.Add(getVehicleDetailesByLicensePlate(licensePLate).Vehicle);
+                garageVehicles.Add(getVehicleDetailesByLicensePlate(licensePlate).Vehicle);
             }
 
             return garageVehicles;
         }
 
-        private bool isVehicleInsideThaGarage(Vehicle i_Vehicle)
+        private bool isVehicleInsideTheGarage(Vehicle i_Vehicle)
         {
             return m_GarageVehicles.ContainsKey(i_Vehicle.LicenceNumber);
         }
