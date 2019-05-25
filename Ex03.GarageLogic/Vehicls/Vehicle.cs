@@ -90,5 +90,34 @@ namespace Ex03.GarageLogic
         #endregion
 
         #endregion
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder vechileString = new StringBuilder();
+            
+            vechileString.Append("License number - ");
+            vechileString.Append(LicenceNumber);
+            vechileString.AppendLine();
+            vechileString.Append("Model name - ");
+            vechileString.Append(ModelName);
+            vechileString.AppendLine();
+            vechileString.Append("Remaining energy - ");
+            vechileString.Append(RemainingEnergy);
+            vechileString.AppendLine();
+            vechileString.Append("Wheels Details - ");
+            vechileString.AppendLine();
+            for (int i = 0; i < m_Wheels.Length; i++)
+            {
+                vechileString.Append((i + 1) + ". ");
+                vechileString.Append(m_Wheels[i].ToString());
+                vechileString.AppendLine();
+            }
+
+            return vechileString.ToString();
+        }
+
+        #endregion
     }
 }

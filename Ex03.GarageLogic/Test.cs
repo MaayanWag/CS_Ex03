@@ -34,25 +34,42 @@ namespace Ex03.GarageLogic
             //g.GetAllVehicleLicensePlatesByFilter();
 
 
+            List<Vehicle> vehicles = new List<Vehicle>();
+
             Wheel[] wheels1 = GarageMain.CreateWheels("manufacturer", 33, 2);
             FuelBasedVehicle fuel1 = GarageMain.CreateFuelBasedVehicle("model", "License", wheels1, eFuelType.Octan95, 8);
             Motorcycle motor_fuel1 = GarageMain.CreateMotorcycle(fuel1, eLicenseType.A, 1000);
+            vehicles.Add(motor_fuel1);
 
             Wheel[] wheels2 = GarageMain.CreateWheels("manufacturer", 33, 2);
             ElectricVehicle electric2 = GarageMain.CreateElectricVehicle("Model_name", "LicenseNum", wheels2, 1.4f);
             Motorcycle motor_electric2 = GarageMain.CreateMotorcycle(electric2, eLicenseType.A1, 10000);
+            vehicles.Add(motor_electric2);
 
             Wheel[] wheels3 = GarageMain.CreateWheels("manufacturer", 31, 4);
             FuelBasedVehicle fuel3 = GarageMain.CreateFuelBasedVehicle("model", "License", wheels3, eFuelType.Octan96, 55);
             Car car_fuel3 = GarageMain.CreateCar(fuel3, eCarColor.Black, eNumberOfDoors.Four);
+            vehicles.Add(car_fuel3);
 
             Wheel[] wheels4 = GarageMain.CreateWheels("manufacturer", 31, 4);
             ElectricVehicle electric4 = GarageMain.CreateElectricVehicle("Model_name", "LicenseNum", wheels4, 1.8f);
             Car car_electric4 = GarageMain.CreateCar(electric4, eCarColor.Black, eNumberOfDoors.Four);
+            vehicles.Add(car_electric4);
 
             Wheel[] wheels5 = GarageMain.CreateWheels("manufacturer", 26, 12);
             FuelBasedVehicle fuel5 = GarageMain.CreateFuelBasedVehicle("model", "License", wheels5, eFuelType.Soler, 110);
             Truck truck_fuel5 = GarageMain.CreateTruck(fuel5, true, 40);
+            vehicles.Add(truck_fuel5);
+
+            foreach (Vehicle v in vehicles)
+            {
+                Console.WriteLine(v.ToString());
+                Console.WriteLine("_______________________________________");
+
+            }
+
+
+
 
             Console.WriteLine("Good Creation. press ENTER to exit :)");
             Garage g = new Garage();

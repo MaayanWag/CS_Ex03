@@ -45,12 +45,27 @@ namespace Ex03.GarageLogic
         {
             if (i_ChargingTime + CurrentBatteryTime > MaxBatteryTime)
             {
-                // TODO: throw the currect Exception
-                throw new Exception("Too much charging");
+                throw new ValueOutOfRangeException(i_ChargingTime, MaxBatteryTime - CurrentBatteryTime, 0.0f);
             }
 
             CurrentBatteryTime += i_ChargingTime;
         }
+        #endregion
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder electricSting = new StringBuilder();
+
+            electricSting.Append("Current battery time amount - ");
+            electricSting.Append(CurrentBatteryTime);
+            electricSting.Append(", Max battery time amount - ");
+            electricSting.Append(MaxBatteryTime);
+
+            return electricSting.ToString();
+        }
+
         #endregion
     }
 }

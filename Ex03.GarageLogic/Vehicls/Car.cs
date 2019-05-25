@@ -143,5 +143,33 @@ namespace Ex03.GarageLogic
         #endregion
 
         #endregion Car
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder carString = new StringBuilder();
+            
+            carString.Append(base.ToString());
+            carString.AppendLine();
+            if (m_FuelBasedCar != null)
+            {
+                carString.Append(m_FuelBasedCar.ToString());
+            }
+            else if (m_ElectricCar != null)
+            {
+                carString.Append(m_ElectricCar.ToString());
+            }
+
+            carString.AppendLine();
+            carString.Append("Car color - ");
+            carString.Append(CarColor);
+            carString.Append(", Number of doors - ");
+            carString.Append(NumberOfDoors);
+            
+            return carString.ToString();
+        }
+
+        #endregion
     }
 }

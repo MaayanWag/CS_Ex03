@@ -42,10 +42,7 @@ namespace Ex03.GarageLogic
 
         public eVehicleState OwnerVehicleState
         {
-            get
-            {
-               return m_OwnerVehicleState;
-            }
+            get { return m_OwnerVehicleState; }
             set { m_OwnerVehicleState = value; }
         }
 

@@ -79,7 +79,7 @@ namespace Ex03.GarageLogic
 
         public float CargoVolume
         {
-            get { return CargoVolume; }
+            get { return m_CargoVolume; }
         }
 
         #endregion
@@ -94,9 +94,29 @@ namespace Ex03.GarageLogic
 
             return remainingEnergy;
         }
-    
+
         #endregion
 
         #endregion Truck
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder truckString = new StringBuilder();
+
+            truckString.Append(base.ToString());
+            truckString.AppendLine();
+            truckString.Append(m_FuelBasedTruck.ToString());
+            truckString.AppendLine();
+            truckString.Append("Contain dangerous materials - ");
+            truckString.Append(ContainDangerousMaterials);
+            truckString.Append(", Cargo volume - ");
+            truckString.Append(CargoVolume);
+
+            return truckString.ToString();
+        }
+
+        #endregion
     }
 }

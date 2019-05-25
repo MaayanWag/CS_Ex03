@@ -35,6 +35,7 @@
     <Compile Include="eUserInstructions.cs" />
     <Compile Include="GrageConsoleUI.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Windows\InsertWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">

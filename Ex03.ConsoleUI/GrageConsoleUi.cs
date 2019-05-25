@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex03.ConsoleUI.Windows;
 using GarageMain = Ex03.GarageLogic.GarageMain;
 
 namespace Ex03.ConsoleUI
@@ -11,6 +12,7 @@ namespace Ex03.ConsoleUI
         
         public static void StartGarage()
         {
+            Console.Clear();
             GarageMain.RunGarageSystem();
 
             string garageFunctionality = getGarageFunctionalityAsString();
@@ -27,7 +29,7 @@ namespace Ex03.ConsoleUI
                 {
                     Console.Clear();
                     Console.WriteLine(garageFunctionality);
-                    string errMsg = $"{userInstructionStr} is not A valid input!";
+                    string errMsg = $"'{userInstructionStr}' is not A valid input!";
                     Console.WriteLine(errMsg);
                 }
             }
@@ -72,26 +74,50 @@ namespace Ex03.ConsoleUI
             bool isInputValid = false;
             StringBuilder chargeBatteryMsgBuilder = new StringBuilder();
 
-            while(!isInputValid)
+            while (!isInputValid)
             {
-                chargeBatteryMsgBuilder.AppendLine("You chose to charge A vehicle battery");
-                chargeBatteryMsgBuilder.AppendLine(
-                    "Please insert vehicle license plate and amount of minutes to charge");
-                string chargeBatteryMsg = chargeBatteryMsgBuilder.ToString();
-                Console.WriteLine(chargeBatteryMsg);
-                Console.Write("Vehicle License Plate Number: ");
-                string licensePlateNumberStr = Console.ReadLine();
-                isInputValid = checkIfLicensePlateIsValid(licensePlateNumberStr);
-                Console.Write("Amount Of Minutes To Charge: ");
-                string amountOfMinutesToChargeStr = Console.ReadLine();
-                isInputValid &= checkIfAmountOfMinutesIsValid(amountOfMinutesToChargeStr);
+                Exception inputException = new Exception();
+
+                try
+                {
+                    chargeBatteryMsgBuilder.AppendLine("You chose to charge A vehicle battery");
+                    chargeBatteryMsgBuilder.AppendLine(
+                        "Please insert vehicle license plate and amount of minutes to charge");
+                    string chargeBatteryMsg = chargeBatteryMsgBuilder.ToString();
+
+                    Console.WriteLine(chargeBatteryMsg);
+                    Console.Write("Vehicle License Plate Number: ");
+                    string licensePlateNumberStr = Console.ReadLine();
+
+                    //checkIfLicensePlateIsValid(licensePlateNumberStr);
+                    Console.Write("Amount Of Minutes To Charge: ");
+                    string amountOfMinutesToChargeStr = Console.ReadLine();
+
+                    if (!isInputValid)
+                    {
+                        Console.Clear();
+                        string errMsg = "";
+                        Console.WriteLine(errMsg);
+                        throw new NotImplementedException();
+                    }
+                }
+                catch (FormatException fe)
+                {
+                    inputException = fe;
+                }
+                catch (ArgumentException ae)
+                {
+                    inputException = ae;
+                }
+                catch (Exception ex)
+                {
+                    inputException = ex;
+                }
 
                 if (!isInputValid)
                 {
                     Console.Clear();
-                    string errMsg = "";
-                    Console.WriteLine(errMsg);
-                    throw new NotFiniteNumberException();
+                    continue;
                 }
             }
         }
@@ -130,8 +156,10 @@ namespace Ex03.ConsoleUI
 
         private static void insertFunctionality()
         {
-            throw new NotImplementedException();
+            InsertWindow insertWindow = new InsertWindow();
+            insertWindow.MainWindow();
         }
+        
 
         #endregion
 
@@ -157,13 +185,19 @@ namespace Ex03.ConsoleUI
             return isUserInstructionValid;
         }
 
-        private static bool checkIfLicensePlateIsValid(string i_LicensePlateNumber)
+        internal static void CheckIfLicensePlateIsValid(string i_LicensePlateNumber)
         {
-            throw new NotImplementedException();
+            foreach (char digit in i_LicensePlateNumber)
+            {
+                if (!char.IsDigit(digit))
+                {
+                    throw new FormatException($"'{i_LicensePlateNumber}' is not a valid input!");
+                }
+            }
         }
+        
         #endregion
 
-        #region Messages
 
         private static string getGarageFunctionalityAsString()
         {
@@ -175,13 +209,11 @@ namespace Ex03.ConsoleUI
             garageFunctionality.Append($"To inflate Vehicle tires - press 4{Environment.NewLine}");
             garageFunctionality.Append($"To refuel a Fuel based vehicle - press 5{Environment.NewLine}");
             garageFunctionality.Append($"To charge an Electric based vehicle - press 6{Environment.NewLine}");
-            garageFunctionality.Append($@"To display vehicle information - press 7{Environment.NewLine}");
+            garageFunctionality.Append($"To display vehicle information - press 7{Environment.NewLine}");
 
             return garageFunctionality.ToString();
         }
-
-        #endregion
-
+        
         private static void clearBuilder(StringBuilder value)
         {
             value.Length = 0;

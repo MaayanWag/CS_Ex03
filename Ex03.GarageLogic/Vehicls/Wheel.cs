@@ -47,17 +47,28 @@ namespace Ex03.GarageLogic
 
         #region Methods
 
-        public void InflateAction(float i_AmountOfAirToAdd)
+        public void InflateAction()
         {
-            if (i_AmountOfAirToAdd + CurrentAirPressure >= MaxAirPressure)
-            {
-                // TODO: add the right Exception
-                throw new Exception("Too much air!");
-            }
-
-            CurrentAirPressure += i_AmountOfAirToAdd;
+            CurrentAirPressure = MaxAirPressure;
         }
-        
+
+        #endregion
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder wheelString = new StringBuilder();
+
+            wheelString.Append("Current air pressure - ");
+            wheelString.Append(CurrentAirPressure);
+            wheelString.Append(", Max air pressure - ");
+            wheelString.Append(MaxAirPressure);
+            wheelString.Append(", Manufacturer name - ");
+            wheelString.Append(CurrentAirPressure);
+
+            return wheelString.ToString();
+        }
         #endregion
     }
 }

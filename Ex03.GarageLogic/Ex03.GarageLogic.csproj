@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Enums\eElectricVehicleOptions.cs" />
+    <Compile Include="Enums\eFuelBasedOptions.cs" />
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="GarageMain.cs" />
     <Compile Include="Garage\VehicleAndOwnerDetails.cs" />
     <Compile Include="Test.cs" />

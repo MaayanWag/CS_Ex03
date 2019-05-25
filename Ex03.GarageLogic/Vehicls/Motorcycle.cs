@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         #region Properties
 
         private FuelBasedVehicle m_FuelBasedMotorcycle = null;
-        private ElectricVehicle m_ElectricVehicle = null;
+        private ElectricVehicle m_ElectricMotorcycle = null;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
             m_FuelBasedMotorcycle = i_VehicleType as FuelBasedVehicle;
-            m_ElectricVehicle = i_VehicleType as ElectricVehicle;
+            m_ElectricMotorcycle = i_VehicleType as ElectricVehicle;
         }
 
         #endregion
@@ -76,13 +76,13 @@ namespace Ex03.GarageLogic
 
         public float CurrentBatteryTime
         {
-            get { return m_ElectricVehicle.CurrentBatteryTime; }
-            set { m_ElectricVehicle.CurrentBatteryTime = value; }
+            get { return m_ElectricMotorcycle.CurrentBatteryTime; }
+            set { m_ElectricMotorcycle.CurrentBatteryTime = value; }
         }
 
         public float MaxBatteryTIme
         {
-            get { return m_ElectricVehicle.MaxBatteryTime; }
+            get { return m_ElectricMotorcycle.MaxBatteryTime; }
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace Ex03.GarageLogic
         {
             if (m_VehicleType == eVehicleType.Electric)
             {
-                m_ElectricVehicle.ChargeBattery(i_ChargingTime);
+                m_ElectricMotorcycle.ChargeBattery(i_ChargingTime);
             }
             else
             {
@@ -134,7 +134,7 @@ namespace Ex03.GarageLogic
             }
             else if (VehicleType == eVehicleType.Electric)
             {
-                remainingEnergy = m_ElectricVehicle.CalcRemainingEnergy();
+                remainingEnergy = m_ElectricMotorcycle.CalcRemainingEnergy();
             }
 
             return remainingEnergy;
@@ -143,5 +143,33 @@ namespace Ex03.GarageLogic
         #endregion
 
         #endregion Motorcycle
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder motorcycleString = new StringBuilder();
+
+            motorcycleString.Append(base.ToString());
+            motorcycleString.AppendLine();
+            if (m_FuelBasedMotorcycle != null)
+            {
+                motorcycleString.Append(m_FuelBasedMotorcycle.ToString());
+            }
+            else if (m_ElectricMotorcycle != null)
+            {
+                motorcycleString.Append(m_ElectricMotorcycle.ToString());
+            }
+
+            motorcycleString.AppendLine();
+            motorcycleString.Append("License type - ");
+            motorcycleString.Append(LicenseType);
+            motorcycleString.Append(", Engine volume - ");
+            motorcycleString.Append(EngineVolume);
+
+            return motorcycleString.ToString();
+        }
+
+        #endregion
     }
 }

@@ -52,17 +52,36 @@ namespace Ex03.GarageLogic
         {
             if (i_FuelType != FuelType)
             {
-                // TODO: throw the correct Exception! 
-                throw new Exception("Not the right fuel type");
+                string errorMessage = $"Fuel Type '{i_FuelType}' is not correct. Should be '{FuelType}' only.";
+                throw new ArgumentException(errorMessage);
             }
             else if(CurrentFuelAmount + i_GasAmount > MaxFuelAmount)
             {
-                // TODO: throw the correct Exception! 
-                throw new Exception("Not the right fuel amount");
+                throw new ValueOutOfRangeException(i_GasAmount, MaxFuelAmount - CurrentFuelAmount, 0.0f);
             }
 
             CurrentFuelAmount += i_GasAmount;
         }
+
+        #endregion
+
+        #region To String
+
+        public override string ToString()
+        {
+            StringBuilder fuelString = new StringBuilder();
+
+            fuelString.Append("Fuel Type - ");
+            fuelString.Append(FuelType);
+            fuelString.Append(", Current fuel amount - ");
+            fuelString.Append(CurrentFuelAmount);
+            fuelString.Append(", Max fuel amount - ");
+            fuelString.Append(MaxFuelAmount);
+
+            return fuelString.ToString();
+
+        }
+
         #endregion
     }
 }

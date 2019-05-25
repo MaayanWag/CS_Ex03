@@ -8,47 +8,44 @@ namespace Ex03.GarageLogic
     {
         #region Properties
 
-        private Dictionary<string, VehicleAndOwnerDetails> m_GarageVehicles = 
+        private static Dictionary<string, VehicleAndOwnerDetails> m_GarageVehicles = 
             new Dictionary<string, VehicleAndOwnerDetails>();
 
         #endregion
 
-        #region Add new Vehicle Functionality
+        #region Add new Vehicle Functionality #1
 
-        public void AddNewVehicle(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
+        public static void AddNewVehicle(Vehicle i_vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
         {
-            // TODO: appropriate msg? (pdf)
-            chackIfVehicleIsValid(i_Vehicle);
-            if (!isVehicleInsideTheGarage(i_Vehicle))
+            string errorMessage = "";
+            if (isVehicleInTheGarage(i_vehicle))
             {
-                VehicleAndOwnerDetails newVehicleAndOwnerDetailsByLicensePlate = 
-                    new VehicleAndOwnerDetails(i_Vehicle, i_OwnerName, i_OwnerPhoneNumber);
-                m_GarageVehicles.Add(i_Vehicle.LicenceNumber, newVehicleAndOwnerDetailsByLicensePlate);
+                errorMessage = $"This vehicle exist in the garage. Changing the vehicle state to 'InRepair'.";
+                updateVehicleAndOwnerDetails(i_vehicle, i_OwnerName, i_OwnerPhoneNumber, eVehicleState.InRepair);
+                throw new ArgumentException(errorMessage);
             }
             else
             {
-                updateVehicleAndOwnerDetails(i_Vehicle, i_OwnerName, i_OwnerPhoneNumber);
+                VehicleAndOwnerDetails newVehicleAndOwnerDetailsByLicensePlate =
+                   new VehicleAndOwnerDetails(i_vehicle, i_OwnerName, i_OwnerPhoneNumber);
+                m_GarageVehicles.Add(i_vehicle.LicenceNumber, newVehicleAndOwnerDetailsByLicensePlate);
             }
         }
-
-        private void chackIfVehicleIsValid(Vehicle i_Vehicle)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void updateVehicleAndOwnerDetails(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber)
+        
+        private static void updateVehicleAndOwnerDetails(Vehicle i_Vehicle, string i_OwnerName, string i_OwnerPhoneNumber, eVehicleState i_VehicleState)
         {
             VehicleAndOwnerDetails vehicleAndOwnerDetailsByLicensePlateToUpdate = m_GarageVehicles[i_Vehicle.LicenceNumber];
-            vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerVehicleState = eVehicleState.InRepair;
+
+            vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerVehicleState = i_VehicleState;
             vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerName = i_OwnerName;
             vehicleAndOwnerDetailsByLicensePlateToUpdate.OwnerPhoneNumber = i_OwnerPhoneNumber;
         }
-        
+
         #endregion
 
-        #region get license plates functonality
+        #region get license plates functonality #2
 
-        public List<string> GetAllVehicleLicensePlatesByFilter(params eVehicleState[] i_VehicleStatesToFilter)
+        public static List<string> GetAllVehicleLicensePlatesByFilter(params eVehicleState[] i_VehicleStatesToFilter)
         {
             List<string> filteredLicensePlates = new List<string>();
             List<VehicleAndOwnerDetails> vehicleAndOwnerDetails = getVehicleAndOwnerDetails();
@@ -58,7 +55,7 @@ namespace Ex03.GarageLogic
             return filteredLicensePlates;
         }
 
-        private void filterVehiclesLicensePlates(List<VehicleAndOwnerDetails> i_VehicleAndOwnerDetails, 
+        private static void filterVehiclesLicensePlates(List<VehicleAndOwnerDetails> i_VehicleAndOwnerDetails, 
             eVehicleState[] i_VehicleStatesToFilter, List<string> i_FilteredLicensePlates)
         {
             foreach (VehicleAndOwnerDetails vehicleAndOwnerDetails in i_VehicleAndOwnerDetails)
@@ -71,52 +68,43 @@ namespace Ex03.GarageLogic
                 }
             }
         }
-        
+
         #endregion
 
-        #region change vehicle state functonality
+        #region change vehicle state functonality #3
 
-        public void ChangeVehicleState(string i_VehicleLicensePlate, eVehicleState i_NewState)
+        public static void ChangeVehicleState(string i_VehicleLicensePlate, eVehicleState i_NewState)
         {
             getVehicleDetailesByLicensePlate(i_VehicleLicensePlate).OwnerVehicleState = i_NewState;
         }
 
         #endregion
 
-        #region inflate tier functionality
+        #region inflate tier functionality #4
 
-        public void InflateTiresToMaximum(string i_VehicleLicensePlate)
+        public static void InflateTiresToMaximum(string i_VehicleLicensePlate)
         {
             Vehicle vehicleToInflateTo = getVehicleDetailesByLicensePlate(i_VehicleLicensePlate).Vehicle;
             Wheel[] vehicleWheels = vehicleToInflateTo.Wheels;
 
             foreach (Wheel vehicleWheel in vehicleWheels)
             {
-                flateWheelToMaximum(vehicleWheel);
+                vehicleWheel.InflateAction();
             }
-        }
-
-        private void flateWheelToMaximum(Wheel vehicleWheel)
-        {
-            float currentWheelFlateState = vehicleWheel.CurrentAirPressure;
-            float amountOfAirToInflate = vehicleWheel.MaxAirPressure - currentWheelFlateState;
-
-            vehicleWheel.InflateAction(amountOfAirToInflate);
         }
 
         #endregion
 
-        #region Refuel Functionality
+        #region Refuel Functionality #5
 
-        public void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
+        public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
         {
             Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
             FuelBasedVehicle vehicleToFuel = vehicle as FuelBasedVehicle;
 
             if (vehicleToFuel == null)
             {
-                // TODO: throw the right Exception
-                throw new Exception("Only Fuel Based Vehicles are accepted");
+                throw new ArgumentException("Only Fuel Based Vehicles are accepted.");
             }
 
             vehicleToFuel.FuelGas(i_AmountToFuel, i_FuelType);
@@ -124,17 +112,16 @@ namespace Ex03.GarageLogic
 
         #endregion
 
-        #region ChargeVehicle functionality
+        #region ChargeVehicle functionality #6
 
-        public void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
+        public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
         {
             Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
             ElectricVehicle vehicleToFuel = vehicle as ElectricVehicle;
 
             if (vehicleToFuel == null)
             {
-                // TODO: throw the right Exception
-                throw new Exception("Only Electric Based Vehicles are accepted");
+                throw new ArgumentException("Only Electric Based Vehicles are accepted.");
             }
 
             vehicleToFuel.ChargeBattery(i_AmountToCharge);
@@ -142,18 +129,34 @@ namespace Ex03.GarageLogic
 
         #endregion
 
-        #region Vehcile information functionality
+        #region Vehcile information functionality #7
 
-        public void DisplayVehicleUInformation(string i_VehicleLicensePlate)
+        public string DisplayVehicleInformation(string i_VehicleLicensePlate)
         {
-            throw new NotImplementedException();
+            Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
+            VehicleAndOwnerDetails vehicleAndOwnerDetails = getVehicleDetailesByLicensePlate(i_VehicleLicensePlate);
+            StringBuilder vehicleInfo = new StringBuilder();
+            vehicleInfo.Append("Vehicle Information:");
+            vehicleInfo.AppendLine();
+            vehicleInfo.Append("State - ");
+            vehicleInfo.Append(vehicleAndOwnerDetails.OwnerVehicleState);
+            vehicleInfo.AppendLine();
+            vehicleInfo.Append("Owner Details - name: ");
+            vehicleInfo.Append(vehicleAndOwnerDetails.OwnerName);
+            vehicleInfo.Append(", Phone number: ");
+            vehicleInfo.Append(vehicleAndOwnerDetails.OwnerPhoneNumber);
+            vehicleInfo.AppendLine();
+            vehicleInfo.Append(vehicle.ToString());
+                
+
+            return vehicleInfo.ToString();
         }
         
         #endregion
 
         #region General Helper Methods
         
-        private VehicleAndOwnerDetails getVehicleDetailesByLicensePlate(string i_LicensePlateNumber)
+        private static VehicleAndOwnerDetails getVehicleDetailesByLicensePlate(string i_LicensePlateNumber)
         {
             VehicleAndOwnerDetails vehicleAndOwnerDetailsByLicensePlate = null;
 
@@ -170,7 +173,7 @@ namespace Ex03.GarageLogic
             return vehicleAndOwnerDetailsByLicensePlate;
         }
 
-        private List<VehicleAndOwnerDetails> getVehicleAndOwnerDetails()
+        private static List<VehicleAndOwnerDetails> getVehicleAndOwnerDetails()
         {
             List<VehicleAndOwnerDetails> vehicleAndOwnerDetails = new List<VehicleAndOwnerDetails>();
             List<Vehicle> garageVehicles = getGarageVehiclesAsList();
@@ -183,12 +186,12 @@ namespace Ex03.GarageLogic
             return vehicleAndOwnerDetails;
         }
 
-        private Vehicle getVehicleByLicensePlate(string i_LicensePlateNumber)
+        private static Vehicle getVehicleByLicensePlate(string i_LicensePlateNumber)
         {
             return getVehicleDetailesByLicensePlate(i_LicensePlateNumber).Vehicle;
         }
 
-        private List<Vehicle> getGarageVehiclesAsList()
+        private static List<Vehicle> getGarageVehiclesAsList()
         {
             List<Vehicle> garageVehicles = new List<Vehicle>();
             List<string> garageLicensePlates = new List<string>(m_GarageVehicles.Keys);
@@ -201,11 +204,15 @@ namespace Ex03.GarageLogic
             return garageVehicles;
         }
 
-        private bool isVehicleInsideTheGarage(Vehicle i_Vehicle)
+        private static bool isVehicleInTheGarage(Vehicle i_Vehicle)
         {
             return m_GarageVehicles.ContainsKey(i_Vehicle.LicenceNumber);
         }
 
+        private static bool isVehicleInTheGarage(string i_LicensePlate)
+        {
+            return m_GarageVehicles.ContainsKey(i_LicensePlate);
+        }
 
         #endregion
     }
