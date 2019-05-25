@@ -82,7 +82,7 @@ namespace Ex03.GarageLogic
 
         public float MaxBatteryTIme
         {
-            get { return m_ElectricCar.MaxBatteryTIme; }
+            get { return m_ElectricCar.MaxBatteryTime; }
         }
 
         #endregion

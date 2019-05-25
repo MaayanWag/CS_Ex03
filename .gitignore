@@ -6,3 +6,6 @@
 *.ide-wal
 *.user
 *.cache
+*.cache
+*.exe
+*.pdb

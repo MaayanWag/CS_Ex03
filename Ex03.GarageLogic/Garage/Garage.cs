@@ -161,7 +161,7 @@ namespace Ex03.GarageLogic
             {
                 vehicleAndOwnerDetailsByLicensePlate = m_GarageVehicles[i_LicensePlateNumber];
             }
-            catch(KeyNotFoundException keyNotFoundException)
+            catch(KeyNotFoundException)
             {
                 // TODO: throw the currect Exception
                 throw new Exception("Not such vehicle in the garage!");

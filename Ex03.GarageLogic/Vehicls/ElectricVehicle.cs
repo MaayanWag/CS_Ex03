@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
             set { m_CurrentBatteryTimeAmount = value; }
         }
 
-        public float MaxBatteryTIme
+        public float MaxBatteryTime
         {
             get { return m_MaxBatteryTimeAmount; }
         }
@@ -38,12 +38,12 @@ namespace Ex03.GarageLogic
 
         public override float CalcRemainingEnergy()
         {
-            return CurrentBatteryTime / MaxBatteryTIme * 100;
+            return CurrentBatteryTime / MaxBatteryTime * 100;
         }
 
         public virtual void ChargeBattery(float i_ChargingTime)
         {
-            if (i_ChargingTime + CurrentBatteryTime > MaxBatteryTIme)
+            if (i_ChargingTime + CurrentBatteryTime > MaxBatteryTime)
             {
                 // TODO: throw the currect Exception
                 throw new Exception("Too much charging");
