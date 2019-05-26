@@ -3,35 +3,34 @@ using System.Collections.Generic;
 using System.Runtime.Remoting.Services;
 using System.Text;
 using Ex03.GarageLogic;
-using Ex03.GarageLogic.Enums;
-using GarageLogic = Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI.Windows
 {
-    internal class InsertWindow
+    internal class InsertWindow : Window
     {
         private string m_OwnerName;
         private string m_OwnerPhoneNumber;
         private string m_ModelName;
         private string m_LicenseNumber;
         private string m_WheelManufacturer;
-        private float m_WheelMaxAirPressure;
         private eVehicleType m_VehicleType;
         private eElectricVehicleOptions m_ElectricVehicleOptions;
         private eFuelBasedOptions m_FuelBasedVehicleOptions;
         private eCarColor m_CarColor;
         private eNumberOfDoors m_CarNumberOfDoors;
-        private eLicenseType m_MotorCycleLicenseType;
+        private eLicenseType m_MotorcycleLicenseType;
         private eFuelType m_FuelType;
         private bool m_IsContainsDangerousMaterials;
         private int m_MotorcycleEngineVolume;
         private int m_TruckCargoVolume;
-        private float m_MaxBatteryAmount;
-        private Wheel[] m_Wheels;
+        private float m_WheelMaxAirPressure;
+        private float m_CurrentBatteryTimeAmount;
+        private float m_MaxBatteryTimeAmount;
         private float m_MaxFuelAmount;
-        private bool m_IsInputValid = false;
-
-        internal void MainWindow()
+        private float m_CurrentFuelAmount;
+        private Wheel[] m_Wheels;
+        
+        public override void MainWindow()
         {
             // Get Owner name
             Console.Clear();
@@ -128,7 +127,7 @@ namespace Ex03.ConsoleUI.Windows
                 try
                 {
                     m_IsInputValid = false;
-                    getVheicleType();
+                    getVehicleType();
                 }
                 catch (FormatException fe)
                 {
@@ -148,6 +147,8 @@ namespace Ex03.ConsoleUI.Windows
                 default:
                     break;
             }
+
+            ReturnToMainWindow();
         }
 
         private void getOwnerPhoneNumber()
@@ -170,7 +171,7 @@ namespace Ex03.ConsoleUI.Windows
             m_OwnerName = Console.ReadLine();
             foreach(char letter in m_OwnerName)
             {
-                if (!char.IsLetter(letter))
+                if (!char.IsLetter(letter) && !char.IsSeparator(letter))
                 {
                     throw new FormatException($"'{m_OwnerName}' is not a valid input!");
                 }
@@ -213,6 +214,23 @@ namespace Ex03.ConsoleUI.Windows
                 }
             }
 
+            // Get current fuel amount
+            Console.Clear();
+            Console.WriteLine("You chose to insert a new fuel based Vehicle.");
+            m_IsInputValid = false;
+            while (!m_IsInputValid)
+            {
+                try
+                {
+                    m_IsInputValid = false;
+                    getFuelCurrentAmount();
+                }
+                catch (FormatException fe)
+                {
+                    Console.WriteLine(fe.Message);
+                }
+            }
+
             // Get max fuel amount
             Console.Clear();
             Console.WriteLine("You chose to insert a new fuel based Vehicle.");
@@ -244,6 +262,23 @@ namespace Ex03.ConsoleUI.Windows
                 default:
                     break;
             }
+        }
+
+        private void getFuelCurrentAmount()
+        {
+            Console.Write("Please insert the current fuel amount (and then press enter): ");
+            string currentFuelAmount = Console.ReadLine();
+
+            try
+            {
+               m_CurrentFuelAmount = float.Parse(currentFuelAmount);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException($"'{currentFuelAmount}' is not a valid input!");
+            }
+
+            m_IsInputValid = true;
         }
 
         private void getFuelMaxAmount()
@@ -293,6 +328,40 @@ namespace Ex03.ConsoleUI.Windows
 
         private void insertElectricWindow()
         {
+            // Get Electric Current battery amount
+            Console.Clear();
+            Console.WriteLine("You chose to insert a new electric based Vehicle.");
+            m_IsInputValid = false;
+            while (!m_IsInputValid)
+            {
+                try
+                {
+                    m_IsInputValid = false;
+                    getCurrentBatteryAmount();
+                }
+                catch (FormatException fe)
+                {
+                    Console.WriteLine(fe.Message);
+                }
+            }
+
+            // Get Electric Max battery amount
+            Console.Clear();
+            Console.WriteLine("You chose to insert a new electric based Vehicle.");
+            m_IsInputValid = false;
+            while (!m_IsInputValid)
+            {
+                try
+                {
+                    m_IsInputValid = false;
+                    getMaxBatteryAmount();
+                }
+                catch (FormatException fe)
+                {
+                    Console.WriteLine(fe.Message);
+                }
+            }
+
             // Get Electric Based Vehicle Class
             Console.Clear();
             Console.WriteLine("You chose to insert a new electric based Vehicle.");
@@ -303,19 +372,6 @@ namespace Ex03.ConsoleUI.Windows
                 {
                     m_IsInputValid = false;
                     getElectricBasedVehicleClass();
-                }
-                catch (FormatException fe)
-                {
-                    Console.WriteLine(fe.Message);
-                }
-            }
-
-            while (!m_IsInputValid)
-            {
-                try
-                {
-                    m_IsInputValid = false;
-                    getMaxBatteryAmount();
                 }
                 catch (FormatException fe)
                 {
@@ -336,6 +392,23 @@ namespace Ex03.ConsoleUI.Windows
             }
         }
 
+        private void getCurrentBatteryAmount()
+        {
+            Console.Write("Please insert Current battery time (and then press enter): ");
+            string currentBatteryAmount = Console.ReadLine();
+
+            try
+            {
+                m_CurrentBatteryTimeAmount = float.Parse(currentBatteryAmount);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException($"'{currentBatteryAmount}' is not a valid input!");
+            }
+
+            m_IsInputValid = true;
+        }
+
         private void getMaxBatteryAmount()
         {
             Console.Write("Please insert Max battery time (and then press enter): ");
@@ -343,7 +416,7 @@ namespace Ex03.ConsoleUI.Windows
 
             try
             {
-                m_MaxBatteryAmount = float.Parse(maxBatteryAmount);
+                m_MaxBatteryTimeAmount = float.Parse(maxBatteryAmount);
             }
             catch (FormatException)
             {
@@ -397,12 +470,9 @@ namespace Ex03.ConsoleUI.Windows
             try
             {
                 m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 12);
-                
-                FuelBasedEnergy fuelBasedVehicle =
-                    GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-                Truck newTruck = GarageMain.CreateTruck(fuelBasedVehicle, m_IsContainsDangerousMaterials, m_TruckCargoVolume);
-
-
+                FuelBasedEnergy fuelBasedEnergy = GarageMain.CreateFuelBasedEnergy(m_FuelType, m_MaxFuelAmount, m_CurrentFuelAmount);
+                Truck newTruck = GarageMain.CreateTruck(fuelBasedEnergy, m_Wheels, m_LicenseNumber, m_ModelName, 
+                    m_IsContainsDangerousMaterials, m_TruckCargoVolume);
                 Garage.AddNewVehicle(newTruck, m_OwnerName, m_OwnerPhoneNumber);
             }
             catch (ArgumentException ae)
@@ -462,16 +532,17 @@ namespace Ex03.ConsoleUI.Windows
 
                 if (m_VehicleType == eVehicleType.FuelBased)
                 {
-                    FuelBasedEnergy fuelBasedVehicle =
-                        GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-                    newMotorcycle = GarageMain.CreateMotorcycle(fuelBasedVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
+                    FuelBasedEnergy fuelBasedEnergy = GarageMain.CreateFuelBasedEnergy(m_FuelType, m_MaxFuelAmount, m_CurrentFuelAmount);
+                    newMotorcycle = GarageMain.CreateMotorcycle(fuelBasedEnergy, m_Wheels, m_LicenseNumber, 
+                        m_ModelName, m_MotorcycleLicenseType, m_MotorcycleEngineVolume);
                 }
 
                 if (m_VehicleType == eVehicleType.Electric)
                 {
-                    ElectricEnergy electricVehicle =
-                        GarageMain.CreateElectricEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
-                    newMotorcycle = GarageMain.CreateMotorcycle(electricVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
+                    ElectricEnergy electricEnergy =
+                        GarageMain.CreateElectricEnergy(m_MaxBatteryTimeAmount, m_CurrentBatteryTimeAmount);
+                    newMotorcycle = GarageMain.CreateMotorcycle(electricEnergy, m_Wheels, m_LicenseNumber, m_ModelName,
+                        m_MotorcycleLicenseType, m_MotorcycleEngineVolume);
 
                 }
                 
@@ -534,16 +605,19 @@ namespace Ex03.ConsoleUI.Windows
                 
                 if (m_VehicleType == eVehicleType.FuelBased)
                 {
-                    FuelBasedEnergy fuelBasedVehicle =
-                        GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
-                    newCar = GarageMain.CreateCar(fuelBasedVehicle, m_CarColor, m_CarNumberOfDoors);
+                    FuelBasedEnergy fuelBasedEnergy = GarageMain.CreateFuelBasedEnergy(m_FuelType, m_MaxFuelAmount, m_CurrentFuelAmount);
+
+                    newCar = GarageMain.CreateCar(fuelBasedEnergy, m_Wheels, m_LicenseNumber, m_ModelName,
+                        m_CarColor, m_CarNumberOfDoors);
                 }
 
                 if (m_VehicleType == eVehicleType.Electric)
                 {
-                    ElectricEnergy electricVehicle =
-                        GarageMain.CreateElectricEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
-                    newCar = GarageMain.CreateCar(electricVehicle, m_CarColor, m_CarNumberOfDoors);
+                    ElectricEnergy electricEnergy =
+                        GarageMain.CreateElectricEnergy(m_MaxBatteryTimeAmount, m_CurrentBatteryTimeAmount);
+
+                    newCar = GarageMain.CreateCar(electricEnergy, m_Wheels, m_LicenseNumber, m_ModelName,
+                        m_CarColor, m_CarNumberOfDoors);
                 }
 
                 Garage.AddNewVehicle(newCar, m_OwnerName, m_OwnerPhoneNumber);
@@ -622,8 +696,8 @@ namespace Ex03.ConsoleUI.Windows
 
             try
             {
-                m_MotorCycleLicenseType = (eLicenseType) Enum.Parse(typeof(eLicenseType), motorCycleLicenseType);
-                if (!Enum.IsDefined(typeof(eLicenseType), m_MotorCycleLicenseType))
+                m_MotorcycleLicenseType = (eLicenseType) Enum.Parse(typeof(eLicenseType), motorCycleLicenseType);
+                if (!Enum.IsDefined(typeof(eLicenseType), m_MotorcycleLicenseType))
                 {
                     throw new FormatException($"'{motorCycleLicenseType}' is not a valid input!");
                 }
@@ -727,14 +801,14 @@ namespace Ex03.ConsoleUI.Windows
             m_IsInputValid = true;
         }
 
-        private void getVheicleType()
+        private void getVehicleType()
         {
             Console.Write("Please insert 1 for electric vehicle OR 2 for fuel based vehicle: ");
             string vheicleType = Console.ReadLine();
 
             try
             {
-                m_VehicleType = (eVehicleType) Enum.Parse(typeof(eVehicleType), vheicleType);
+                m_VehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), vheicleType);
                 if (!Enum.IsDefined(typeof(eVehicleType), m_VehicleType))
                 {
                     throw new FormatException($"'{vheicleType}' is not a valid input!");
@@ -778,7 +852,7 @@ namespace Ex03.ConsoleUI.Windows
             m_LicenseNumber = Console.ReadLine();
             try
             {
-                GarageConsoleUi.CheckIfLicensePlateIsValid(m_LicenseNumber);
+                InputValidations.CheckIfLicensePlateIsValid(m_LicenseNumber);
                 m_IsInputValid = true;
             }
             catch (FormatException fe)

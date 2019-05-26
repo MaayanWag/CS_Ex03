@@ -259,6 +259,5 @@ namespace Ex03.GarageLogic
         }
 
         #endregion
-
     }
 }

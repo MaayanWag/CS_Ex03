@@ -97,35 +97,36 @@ namespace Ex03.GarageLogic
 
         #region Refuel Functionality #5
 
-        public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
-        {
-            Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-            FuelBasedEnergy vehicleToFuel = vehicle as FuelBasedEnergy;
+        //public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
+        //{
+        //    Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
+        //    FuelBasedEnergy vehicleToFuel = vehicle as FuelBasedEnergy;
 
-            if (vehicleToFuel == null)
-            {
-                throw new ArgumentException("Only Fuel Based Vehicles are accepted.");
-            }
+        //    if (vehicleToFuel == null)
+        //    {
+        //        throw new ArgumentException("Only Fuel Based Vehicles are accepted.");
+        //    }
 
-            vehicleToFuel.FuelGas(i_AmountToFuel, i_FuelType);
-        }
+        //    vehicleToFuel.FuelGas(i_AmountToFuel, i_FuelType);
+        //}
 
         #endregion
 
         #region ChargeVehicle functionality #6
 
-        public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
-        {
-            Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-            ElectricEnergy vehicleToFuel = vehicle as ElectricEnergy;
+        //public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
+        //{
+        //    Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
+            
+        //    ElectricEnergy vehicleToFuel = vehicle as ElectricEnergy;
 
-            if (vehicleToFuel == null)
-            {
-                throw new ArgumentException("Only Electric Based Vehicles are accepted.");
-            }
+        //    if (vehicleToFuel == null)
+        //    {
+        //        throw new ArgumentException("Only Electric Based Vehicles are accepted.");
+        //    }
 
-            vehicleToFuel.ChargeBattery(i_AmountToCharge);
-        }
+        //    vehicleToFuel.ChargeBattery(i_AmountToCharge);
+        //}
 
         #endregion
 

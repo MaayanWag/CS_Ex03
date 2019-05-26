@@ -34,8 +34,16 @@
   <ItemGroup>
     <Compile Include="eUserInstructions.cs" />
     <Compile Include="GrageConsoleUI.cs" />
+    <Compile Include="InputValidations.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Windows\ChangeVehicleStateWindow.cs" />
+    <Compile Include="Windows\ChargeBatteryWindow.cs" />
+    <Compile Include="Windows\DisplayLicensePlateWindow.cs" />
+    <Compile Include="Windows\DisplayVehicleInformationWindow.cs" />
+    <Compile Include="Windows\FuelGasWindow.cs" />
+    <Compile Include="Windows\InflateTiresWindow.cs" />
     <Compile Include="Windows\InsertWindow.cs" />
+    <Compile Include="Windows\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">

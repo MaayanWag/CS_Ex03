@@ -23,7 +23,7 @@ namespace Ex03.ConsoleUI
             while (!isUserInstructionIsValid)
             {
                 string userInstructionStr = Console.ReadLine();
-                isUserInstructionIsValid = checkUserInstruction(userInstructionStr, out userInstruction);
+                isUserInstructionIsValid = InputValidations.CheckUserInstruction(userInstructionStr, out userInstruction);
 
                 if (!isUserInstructionIsValid)
                 {
@@ -131,27 +131,32 @@ namespace Ex03.ConsoleUI
 
         private static void displayLicensePlateFunctionality()
         {
-            throw new NotImplementedException();
+            DisplayLicensePlateWindow displayLicensePlateWindow = new DisplayLicensePlateWindow();
+            displayLicensePlateWindow.MainWindow();
         }
 
         private static void displayVehicleInformationFunctionality()
         {
-            throw new NotImplementedException();
+            DisplayVehicleInformationWindow displayVehicleInformationWindow = new DisplayVehicleInformationWindow();
+            displayVehicleInformationWindow.MainWindow();
         }
 
         private static void fuelGasFunctionality()
         {
-            throw new NotImplementedException();
+            FuelGasWindow fuelGasWindow = new FuelGasWindow();
+            fuelGasWindow.MainWindow();
         }
 
         private static void inflateTiresFunctionality()
         {
-            throw new NotImplementedException();
+            InflateTiresWindow inflateTiresWindow = new InflateTiresWindow();
+            inflateTiresWindow.MainWindow();
         }
 
         private static void changeVehicleStateFunctionality()
         {
-            throw new NotImplementedException();
+            ChangeVehicleStateWindow changeVehicleStateWindow = new ChangeVehicleStateWindow();
+            changeVehicleStateWindow.MainWindow();
         }
 
         private static void insertFunctionality()
@@ -162,43 +167,7 @@ namespace Ex03.ConsoleUI
         
 
         #endregion
-
-        #region InputValidations
-
-        private static bool checkUserInstruction(string i_UserInstructionStr, out eUserInstructions i_UserInstruction)
-        {
-            bool isUserInstructionValid = true;
-            i_UserInstruction = eUserInstructions.Insert;
-
-            try
-            {
-                i_UserInstruction = (eUserInstructions)Enum.Parse(typeof(eUserInstructions), i_UserInstructionStr);
-
-                isUserInstructionValid = Enum.IsDefined(typeof(eUserInstructions), i_UserInstruction);
-
-            }
-            catch (ArgumentException)
-            {
-                isUserInstructionValid = false;
-            }
-
-            return isUserInstructionValid;
-        }
-
-        internal static void CheckIfLicensePlateIsValid(string i_LicensePlateNumber)
-        {
-            foreach (char digit in i_LicensePlateNumber)
-            {
-                if (!char.IsDigit(digit))
-                {
-                    throw new FormatException($"'{i_LicensePlateNumber}' is not a valid input!");
-                }
-            }
-        }
         
-        #endregion
-
-
         private static string getGarageFunctionalityAsString()
         {
             StringBuilder garageFunctionality = new StringBuilder();
