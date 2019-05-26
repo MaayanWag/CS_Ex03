@@ -8,22 +8,21 @@ namespace Ex03.GarageLogic
     {
         #region Properties
 
-        private FuelBasedVehicle m_FuelBasedMotorcycle = null;
-        private ElectricVehicle m_ElectricMotorcycle = null;
+        private Energy m_Energy = null;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
         #endregion
 
         #region Constructors
-        
-        public Motorcycle(Vehicle i_VehicleType, eLicenseType i_LicenseType, int i_EngineVolume) :
-            base(i_VehicleType.ModelName, i_VehicleType.LicenceNumber, i_VehicleType.Wheels, i_VehicleType.VehicleType)
+
+        public Motorcycle(Energy i_Energy, Wheel[] i_Wheels, string i_LicenseNumber,
+            eLicenseType i_LicenseType, int i_EngineVolume, string i_ModelName, eVehicleType i_VehicleType)
+            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_VehicleType)
         {
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
-            m_FuelBasedMotorcycle = i_VehicleType as FuelBasedVehicle;
-            m_ElectricMotorcycle = i_VehicleType as ElectricVehicle;
+            m_Energy = i_Energy;
         }
 
         #endregion
@@ -35,18 +34,27 @@ namespace Ex03.GarageLogic
         public float MaxFuelAmount
         {
 
-            get { return m_FuelBasedMotorcycle.MaxFuelAmount; }
+            get { return m_Energy.MaxAmount; }
         }
 
         public float CurrentFuelAmount
         {
-            get { return m_FuelBasedMotorcycle.CurrentFuelAmount; }
-            set { m_FuelBasedMotorcycle.CurrentFuelAmount = value; }
+            get { return m_Energy.CurrentAmount; }
+            set { m_Energy.CurrentAmount = value; }
         }
 
         public eFuelType FuelType
         {
-            get { return m_FuelBasedMotorcycle.FuelType; }
+            get
+            {
+                FuelBasedEnergy energy = m_Energy as FuelBasedEnergy;
+                if (energy == null)
+                {
+                    throw new ArgumentException("This morotcycle is not fuel based!");
+                }
+
+                return energy.FuelType;
+            }
         }
 
         #endregion
@@ -55,17 +63,17 @@ namespace Ex03.GarageLogic
 
         public void FuelGas(float i_GasAmount, eFuelType i_FuelType)
         {
-            if (m_VehicleType == eVehicleType.FuelBased)
+            FuelBasedEnergy energy = m_Energy as FuelBasedEnergy;
+            if (energy == null)
             {
-                m_FuelBasedMotorcycle.FuelGas(i_GasAmount, i_FuelType);
+                throw new ArgumentException("This morotcycle is not fuel based!");
             }
-            else
-            {
-                // TODO: Throw Exception If needed
-                throw new NotImplementedException();
-            }
+
+            energy.FuelGas(i_GasAmount, i_FuelType); ;
+
         }
-        
+
+
         #endregion
 
         #endregion FuelBased
@@ -76,29 +84,29 @@ namespace Ex03.GarageLogic
 
         public float CurrentBatteryTime
         {
-            get { return m_ElectricMotorcycle.CurrentBatteryTime; }
-            set { m_ElectricMotorcycle.CurrentBatteryTime = value; }
+            get { return m_Energy.CurrentAmount; }
+            set { m_Energy.CurrentAmount = value; }
         }
 
         public float MaxBatteryTIme
         {
-            get { return m_ElectricMotorcycle.MaxBatteryTime; }
+            get { return m_Energy.MaxAmount; }
         }
 
         #endregion
 
         #region Methods
-        
+
         public void ChargeBattery(float i_ChargingTime)
         {
-            if (m_VehicleType == eVehicleType.Electric)
+            ElectricEnergy energy = m_Energy as ElectricEnergy;
+            if (energy != null)
             {
-                m_ElectricMotorcycle.ChargeBattery(i_ChargingTime);
+                energy.ChargeBattery(i_ChargingTime);
             }
             else
             {
-                // TODO: Throw Exception If needed
-                throw new NotImplementedException();
+                throw new ArgumentException("This motorcycle is not electric!");
             }
         }
 
@@ -126,18 +134,7 @@ namespace Ex03.GarageLogic
 
         public override float CalcRemainingEnergy()
         {
-            float remainingEnergy = 0;
-
-            if (VehicleType == eVehicleType.FuelBased)
-            {
-                remainingEnergy = m_FuelBasedMotorcycle.CalcRemainingEnergy();
-            }
-            else if (VehicleType == eVehicleType.Electric)
-            {
-                remainingEnergy = m_ElectricMotorcycle.CalcRemainingEnergy();
-            }
-
-            return remainingEnergy;
+            return m_Energy.CalcRemainigEnergy();
         }
 
         #endregion
@@ -152,15 +149,7 @@ namespace Ex03.GarageLogic
 
             motorcycleString.Append(base.ToString());
             motorcycleString.AppendLine();
-            if (m_FuelBasedMotorcycle != null)
-            {
-                motorcycleString.Append(m_FuelBasedMotorcycle.ToString());
-            }
-            else if (m_ElectricMotorcycle != null)
-            {
-                motorcycleString.Append(m_ElectricMotorcycle.ToString());
-            }
-
+            motorcycleString.Append(m_Energy.ToString());
             motorcycleString.AppendLine();
             motorcycleString.Append("License type - ");
             motorcycleString.Append(LicenseType);

@@ -40,77 +40,81 @@ namespace Ex03.GarageLogic
 
         #region Create veheicle
 
-        public static FuelBasedVehicle CreateFuelBasedVehicle(string i_ModelName, string i_LicenseNumber, Wheel[] i_Wheels,
-            eFuelType i_FuelType, float i_MaxFuelAmount)
+        public static FuelBasedEnergy CreateFuelBasedEnergy(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
         {
-            FuelBasedVehicle fuelVehicle = new FuelBasedVehicle(i_ModelName, i_LicenseNumber, i_Wheels, i_FuelType, i_MaxFuelAmount);
+            FuelBasedEnergy fuelEnergy = new FuelBasedEnergy(i_FuelType, i_MaxFuelAmount, i_CurrentFuelAmount);
 
-            return fuelVehicle;
+            return fuelEnergy;
         }
 
-        public static ElectricVehicle CreateElectricVehicle(string i_ModelName, string i_LicenseNumber, Wheel[] i_Wheels,
-            float i_MaxBatteryTimeAmount)
+        public static ElectricEnergy CreateElectricEnergy(float i_MaxBatteryTimeAmount, float i_CurrentBatteryTimeAmount)
         {
-            ElectricVehicle electricVehicle = new ElectricVehicle(i_ModelName, i_LicenseNumber, i_Wheels, i_MaxBatteryTimeAmount);
+            ElectricEnergy electricEnergy = new ElectricEnergy(i_MaxBatteryTimeAmount, i_CurrentBatteryTimeAmount);
 
-            return electricVehicle;
+            return electricEnergy;
         }
 
-        public static Car CreateCar(Vehicle i_VehicleType, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
+        public static Car CreateCar(Energy i_Energy, Wheel[] i_Wheels, string i_LicenseNumber, string i_ModelName, 
+            eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
         {
             Car newCar = null;
-            ElectricVehicle electricVehicle = i_VehicleType as ElectricVehicle;
-            FuelBasedVehicle fuelBasedVehicle = i_VehicleType as FuelBasedVehicle;
-
-            if (electricVehicle != null)
+            ElectricEnergy electricEnergy = i_Energy as ElectricEnergy;
+            FuelBasedEnergy fuelBasedEnergy = i_Energy as FuelBasedEnergy;
+            eVehicleType vehicleType = eVehicleType.Electric;
+            
+            if (electricEnergy != null)
             {
-                electricCarParamsAreValid(electricVehicle.Wheels, electricVehicle.MaxBatteryTime);
+                isElectricCarParamsAreValid(i_Wheels, electricEnergy.MaxBatteryTime);
             }
-            else if (fuelBasedVehicle != null)
+            else if (fuelBasedEnergy != null)
             {
-                fuelBasedCarParamsAreValid(fuelBasedVehicle.Wheels, fuelBasedVehicle.FuelType, fuelBasedVehicle.MaxFuelAmount);
+                isFuelBasedCarParamsAreValid(i_Wheels, fuelBasedEnergy.FuelType, fuelBasedEnergy.MaxFuelAmount);
+                vehicleType = eVehicleType.FuelBased;
             }
             else
             {
                 throw new ArgumentException("Not a valid Vehicle! Should be fuel based or electric based only.");
             }
 
-            newCar = new Car(i_VehicleType, i_CarColor, i_NumberOfDoors);
+            newCar = new Car(i_Energy, i_Wheels, i_CarColor, i_NumberOfDoors, i_ModelName, i_LicenseNumber, vehicleType);
 
             return newCar;
         }
 
-        public static Motorcycle CreateMotorcycle(Vehicle i_VehicleType, eLicenseType i_LicenseType, int i_EngineVolume)
+        public static Motorcycle CreateMotorcycle(Energy i_Energy, Wheel[] i_Wheels, string i_LicenseNumber, string i_ModelName,
+            eLicenseType i_LicenseType, int i_EngineVolume)
         {
             Motorcycle newMotorcycle = null;
-            ElectricVehicle electricVehicle = i_VehicleType as ElectricVehicle;
-            FuelBasedVehicle fuelBasedVehicle = i_VehicleType as FuelBasedVehicle;
+            ElectricEnergy electricEnergy = i_Energy as ElectricEnergy;
+            FuelBasedEnergy fuelBasedEnergy = i_Energy as FuelBasedEnergy;
+            eVehicleType vehicleType = eVehicleType.Electric;
 
-            if (electricVehicle != null)
+            if (electricEnergy != null)
             {
-                electricMotorcycleParamsAreValid(electricVehicle.Wheels, electricVehicle.MaxBatteryTime);
+                isElectricMotorcycleParamsAreValid(i_Wheels, electricEnergy.MaxBatteryTime);
             }
-            else if (fuelBasedVehicle != null)
+            else if (fuelBasedEnergy != null)
             {
-                fuelBasedMotorcycleParamsAreValid(fuelBasedVehicle.Wheels, fuelBasedVehicle.FuelType, fuelBasedVehicle.MaxFuelAmount);
+                isFuelBasedMotorcycleParamsAreValid(i_Wheels, fuelBasedEnergy.FuelType, fuelBasedEnergy.MaxFuelAmount);
+                vehicleType = eVehicleType.FuelBased;
             }
             else
             {
-                // TODO: change Exception
-                throw new Exception("Not a valid Vehicle!");
+                throw new ArgumentException("Not a valid Energy!");
             }
 
-            newMotorcycle = new Motorcycle(i_VehicleType, i_LicenseType, i_EngineVolume);
+            newMotorcycle = new Motorcycle(i_Energy, i_Wheels, i_LicenseNumber, i_LicenseType, i_EngineVolume, i_ModelName, vehicleType);
 
             return newMotorcycle;
         }
 
-        public static Truck CreateTruck(FuelBasedVehicle i_FuelBasedTruck, bool i_ContainDangerousMaterials, float i_CargoVolume)
+        public static Truck CreateTruck(FuelBasedEnergy i_FuelBasedTruck, Wheel[] i_Wheels, string i_LicenseNumber, string i_ModelName,
+            bool i_ContainDangerousMaterials, float i_CargoVolume)
         {
             Truck newTruck = null;
-            fuelBasedTruckParamsAreValid(i_FuelBasedTruck.Wheels, i_FuelBasedTruck.FuelType, i_FuelBasedTruck.MaxFuelAmount);
 
-            newTruck = new Truck(i_FuelBasedTruck, i_ContainDangerousMaterials, i_CargoVolume);
+            isFuelBasedTruckParamsAreValid(i_Wheels, i_FuelBasedTruck.FuelType, i_FuelBasedTruck.MaxFuelAmount);
+            newTruck = new Truck(i_FuelBasedTruck, i_Wheels, i_ContainDangerousMaterials, i_CargoVolume, i_ModelName, i_LicenseNumber);
 
             return newTruck;
         }
@@ -135,7 +139,7 @@ namespace Ex03.GarageLogic
 
         #region validations
 
-        private static void electricCarParamsAreValid(Wheel[] i_Wheels, float i_MaxBatteryTime)
+        private static void isElectricCarParamsAreValid(Wheel[] i_Wheels, float i_MaxBatteryTime)
         {
             foreach (Wheel wheel in i_Wheels)
             {
@@ -156,27 +160,33 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private static void fuelBasedCarParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
+        private static void isFuelBasedCarParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
         {
-            bool carParamsValid = true;
-
             foreach (Wheel wheel in i_Wheels)
             {
-                carParamsValid &= wheel.MaxAirPressure == k_FuelBasedCarValidMaxAirPressure;
+                if (wheel.MaxAirPressure != k_FuelBasedCarValidMaxAirPressure)
+                {
+                    throw new ArgumentException($"Invalid air pressure: {wheel.MaxAirPressure}. The garage supports only {k_ElectricCarValidMaxAirPressure} air pressure.");
+                }
             }
 
-            carParamsValid &= i_Wheels.Length == k_FuelBasedCarValidNumberOfWheels;
-            carParamsValid &= i_MaxFuelAmount == k_FuelBasedCarValidMaxFuelAmount;
-            carParamsValid &= i_FuelType == k_FuelBasedCarValidFuelType;
-
-            if (!carParamsValid)
+            if (i_Wheels.Length != k_FuelBasedCarValidNumberOfWheels)
             {
-                //TODO: Create Exception
-                throw new Exception();
+                throw new ArgumentException($"Invalid wheels amount: {i_Wheels.Length}. The garage supports only {k_ElectricCarValidNumberOfWheels} wheel amount.");
+            }
+
+            if (i_MaxFuelAmount != k_FuelBasedCarValidMaxFuelAmount)
+            {
+                throw new ArgumentException($"Invalid Max fuel amount: {i_MaxFuelAmount}. The garage supports only {k_FuelBasedCarValidMaxFuelAmount} fuel amount.");
+            }
+
+            if (i_FuelType != k_FuelBasedCarValidFuelType)
+            {
+                throw new ArgumentException($"Invalid fuel type: {i_FuelType}. The garage supports only {k_FuelBasedCarValidFuelType} fuel type..");
             }
         }
 
-        private static void electricMotorcycleParamsAreValid(Wheel[] i_Wheels, float i_MaxBatteryTime)
+        private static void isElectricMotorcycleParamsAreValid(Wheel[] i_Wheels, float i_MaxBatteryTime)
         {
             bool motorcycleParamsValid = true;
 
@@ -184,53 +194,67 @@ namespace Ex03.GarageLogic
             {
                 motorcycleParamsValid &= wheel.MaxAirPressure == k_ElectricMotorcycleValidMaxAirPressure;
             }
-
-            motorcycleParamsValid &= i_Wheels.Length == k_ElectricMotorcycleValidNumberOfWheels;
-            motorcycleParamsValid &= i_MaxBatteryTime == k_ElectricMotorcycleValidMaxBatteryTime;
-            if (!motorcycleParamsValid)
+            
+            if (i_Wheels.Length != k_ElectricMotorcycleValidNumberOfWheels)
             {
-                //TODO: Create Exception
-                throw new Exception();
+                throw new ArgumentException($"Invalid wheels amount: {i_Wheels.Length}. The garage supports only {k_ElectricMotorcycleValidNumberOfWheels} wheel amount.");
+            }
+
+            if (i_MaxBatteryTime != k_ElectricMotorcycleValidMaxBatteryTime)
+            {
+                throw new ArgumentException($"Invalid Max battery life: {i_MaxBatteryTime}. The garage supports only {k_ElectricMotorcycleValidMaxBatteryTime} battery life.");
             }
         }
 
-        private static void fuelBasedMotorcycleParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
+        private static void isFuelBasedMotorcycleParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
         {
-            bool motorcycleParamsValid = true;
-
             foreach (Wheel wheel in i_Wheels)
             {
-                motorcycleParamsValid &= wheel.MaxAirPressure == k_FuelBasedMotorcycleValidMaxAirPressure;
+                if (wheel.MaxAirPressure != k_FuelBasedMotorcycleValidMaxAirPressure)
+                {
+                    throw new ArgumentException($"Invalid air pressure: {wheel.MaxAirPressure}. The garage supports only {k_ElectricCarValidMaxAirPressure} air pressure.");
+                }
+            }
+            
+            if (i_Wheels.Length != k_FuelBasedMotorcycleValidNumberOfWheels)
+            {
+                throw new ArgumentException($"Invalid wheels amount: {i_Wheels.Length}. The garage supports only {k_FuelBasedMotorcycleValidNumberOfWheels} wheel amount.");
             }
 
-            motorcycleParamsValid &= i_Wheels.Length == k_FuelBasedMotorcycleValidNumberOfWheels;
-            motorcycleParamsValid &= i_MaxFuelAmount == k_FuelBasedMotorcycleValidMaxFuelAmount;
-            motorcycleParamsValid &= i_FuelType == k_FuelBasedMotorcycleValidFuelType;
-
-            if (!motorcycleParamsValid)
+            if (i_MaxFuelAmount != k_FuelBasedMotorcycleValidMaxFuelAmount)
             {
-                //TODO: Create Exception
-                throw new Exception();
+                throw new ArgumentException($"Invalid Max fuel amount: {i_MaxFuelAmount}. The garage supports only {k_FuelBasedMotorcycleValidMaxFuelAmount} fuel amount.");
+            }
+
+            if (i_FuelType != k_FuelBasedMotorcycleValidFuelType)
+            {
+                throw new ArgumentException($"Invalid fuel type: {i_FuelType}. The garage supports only {k_FuelBasedMotorcycleValidFuelType} fuel type..");
             }
         }
 
-        private static void fuelBasedTruckParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
+        private static void isFuelBasedTruckParamsAreValid(Wheel[] i_Wheels, eFuelType i_FuelType, float i_MaxFuelAmount)
         {
-            bool truckParamsValid = true;
-
             foreach (Wheel wheel in i_Wheels)
             {
-                truckParamsValid &= wheel.MaxAirPressure == k_FuelBasedTruckValidMaxAirPressure;
+                if (wheel.MaxAirPressure != k_FuelBasedTruckValidMaxAirPressure)
+                {
+                    throw new ArgumentException($"Invalid air pressure: {wheel.MaxAirPressure}. The garage supports only {k_FuelBasedTruckValidMaxAirPressure} air pressure.");
+                }
             }
 
-            truckParamsValid &= i_Wheels.Length == k_FuelBasedTruckValidNumberOfWheels;
-            truckParamsValid &= i_MaxFuelAmount == k_FuelBasedTruckValidMaxFuelAmount;
-            truckParamsValid &= i_FuelType == k_FuelBasedTruckValidFuelType;
-
-            if (!truckParamsValid)
+            if (i_Wheels.Length != k_FuelBasedTruckValidNumberOfWheels)
             {
-                //TODO: Create Exception
-                throw new Exception();
+                throw new ArgumentException($"Invalid wheels amount: {i_Wheels.Length}. The garage supports only {k_FuelBasedTruckValidNumberOfWheels} wheel amount.");
+            }
+
+            if (i_MaxFuelAmount != k_FuelBasedTruckValidMaxFuelAmount)
+            {
+                throw new ArgumentException($"Invalid Max fuel amount: {i_MaxFuelAmount}. The garage supports only {k_FuelBasedTruckValidMaxFuelAmount} fuel amount.");
+            }
+
+            if (i_FuelType != k_FuelBasedTruckValidFuelType)
+            {
+                throw new ArgumentException($"Invalid fuel type: {i_FuelType}. The garage supports only {k_FuelBasedTruckValidFuelType} fuel type..");
             }
         }
 

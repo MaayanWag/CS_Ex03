@@ -4,35 +4,31 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class FuelBasedVehicle : Vehicle
+    public class FuelBasedEnergy : Energy
     {
         #region properties
         private eFuelType m_FuelType;
-        private float m_CurrentFuelAmount;
-        private float m_MaxFuelAmount;
         #endregion
 
         #region Constructors
-        public FuelBasedVehicle(string i_ModelName, string i_LicenseNumber, Wheel[] i_Wheels,
-            eFuelType i_FuelType, float i_MaxFuelAmount) :
-            base(i_ModelName, i_LicenseNumber, i_Wheels, eVehicleType.FuelBased)
+        public FuelBasedEnergy(eFuelType i_FuelType, float i_MaxFuelAmount , float i_CurrentFuelAmount)             
         {
             m_FuelType = i_FuelType;
-            m_CurrentFuelAmount = i_MaxFuelAmount;
-            m_MaxFuelAmount = i_MaxFuelAmount;
+            base.MaxAmount = i_MaxFuelAmount;
+            base.CurrentAmount = i_CurrentFuelAmount;
         }
         #endregion
         
         #region Getters And Setters
         public float MaxFuelAmount
         {
-            get { return m_MaxFuelAmount; }
+            get { return MaxAmount; }
         }
 
         public float CurrentFuelAmount
         {
-            get { return m_CurrentFuelAmount; }
-            set { m_CurrentFuelAmount = value; }
+            get { return CurrentAmount; }
+            set { CurrentAmount = value; }
         }
 
         public eFuelType FuelType
@@ -42,11 +38,6 @@ namespace Ex03.GarageLogic
         #endregion
 
         #region Methods
-
-        public override float CalcRemainingEnergy()
-        {
-            return CurrentFuelAmount / MaxFuelAmount * 100;
-        }
 
         public virtual void FuelGas(float i_GasAmount, eFuelType i_FuelType)
         {

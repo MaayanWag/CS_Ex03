@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
 
         private bool m_ContainDangerousMaterials;
         private float m_CargoVolume;
-        private FuelBasedVehicle m_FuelBasedTruck;
+        private FuelBasedEnergy m_FuelEnergy;
 
         #endregion
 
@@ -18,10 +18,11 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Truck(FuelBasedVehicle i_FuelBasedTruck, bool i_ContainDangerousMaterials, float i_CargoVolume) :
-            base(i_FuelBasedTruck.ModelName, i_FuelBasedTruck.LicenceNumber, i_FuelBasedTruck.Wheels, i_FuelBasedTruck.VehicleType)
+        public Truck(FuelBasedEnergy i_FuelEnergy, Wheel[] i_Wheels, bool i_ContainDangerousMaterials,
+            float i_CargoVolume, string i_ModelName, string i_LicenseNumber) 
+            : base( i_ModelName, i_LicenseNumber, i_Wheels, eVehicleType.FuelBased)
         {
-            m_FuelBasedTruck = i_FuelBasedTruck;
+            m_FuelEnergy = i_FuelEnergy;
             m_ContainDangerousMaterials = i_ContainDangerousMaterials;
             m_CargoVolume = i_CargoVolume;
         }
@@ -33,18 +34,18 @@ namespace Ex03.GarageLogic
         public float MaxFuelAmount
         {
 
-            get { return m_FuelBasedTruck.MaxFuelAmount; }
+            get { return m_FuelEnergy.MaxFuelAmount; }
         }
 
         public float CurrentFuelAmount
         {
-            get { return m_FuelBasedTruck.CurrentFuelAmount; }
-            set { m_FuelBasedTruck.CurrentFuelAmount = value; }
+            get { return m_FuelEnergy.CurrentFuelAmount; }
+            set { m_FuelEnergy.CurrentFuelAmount = value; }
         }
 
         public eFuelType FuelType
         {
-            get { return m_FuelBasedTruck.FuelType; }
+            get { return m_FuelEnergy.FuelType; }
         }
 
         #endregion
@@ -53,15 +54,7 @@ namespace Ex03.GarageLogic
 
         public void FuelGas(float i_GasAmount, eFuelType i_FuelType)
         {
-            if (m_VehicleType == eVehicleType.FuelBased)
-            {
-                m_FuelBasedTruck.FuelGas(i_GasAmount, i_FuelType);
-            }
-            else
-            {
-                // TODO: Throw Exception If needed
-                throw new NotImplementedException();
-            }
+            m_FuelEnergy.FuelGas(i_GasAmount, i_FuelType);
         }
 
         #endregion
@@ -85,14 +78,10 @@ namespace Ex03.GarageLogic
         #endregion
 
         #region Methods
-        
+
         public override float CalcRemainingEnergy()
         {
-            float remainingEnergy = 0;
-
-            remainingEnergy = m_FuelBasedTruck.CalcRemainingEnergy();
-
-            return remainingEnergy;
+            return m_FuelEnergy.CalcRemainigEnergy();
         }
 
         #endregion
@@ -107,7 +96,7 @@ namespace Ex03.GarageLogic
 
             truckString.Append(base.ToString());
             truckString.AppendLine();
-            truckString.Append(m_FuelBasedTruck.ToString());
+            truckString.Append(m_FuelEnergy.ToString());
             truckString.AppendLine();
             truckString.Append("Contain dangerous materials - ");
             truckString.Append(ContainDangerousMaterials);

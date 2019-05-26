@@ -8,8 +8,7 @@ namespace Ex03.GarageLogic
     public class Car : Vehicle
     {
         #region Properties
-        private FuelBasedVehicle m_FuelBasedCar = null;
-        private ElectricVehicle m_ElectricCar = null;
+        private Energy m_Energy = null;
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;
 
@@ -17,13 +16,13 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Car(Vehicle i_Vehicle, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors) :
-            base(i_Vehicle.ModelName, i_Vehicle.LicenceNumber, i_Vehicle.Wheels, i_Vehicle.VehicleType)
+        public Car(Energy i_Energy, Wheel[] i_Wheels, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, string i_ModelName,
+            string i_LicenseNumber, eVehicleType i_VehicleType ) 
+            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_VehicleType)
         {
             m_CarColor = i_CarColor;
             m_NumberOfDoors = i_NumberOfDoors;
-            m_FuelBasedCar = i_Vehicle as FuelBasedVehicle;
-            m_ElectricCar = i_Vehicle as ElectricVehicle;
+            m_Energy = i_Energy;
         }
 
         #endregion
@@ -35,18 +34,27 @@ namespace Ex03.GarageLogic
         public float MaxFuelAmount
         {
 
-            get { return m_FuelBasedCar.MaxFuelAmount; }
+            get { return m_Energy.MaxAmount; }
         }
 
         public float CurrentFuelAmount
         {
-            get { return m_FuelBasedCar.CurrentFuelAmount; }
-            set { m_FuelBasedCar.CurrentFuelAmount = value; }
+            get { return m_Energy.CurrentAmount; }
+            set { m_Energy.CurrentAmount = value; }
         }
 
         public eFuelType FuelType
         {
-            get { return m_FuelBasedCar.FuelType; }
+            get
+            {
+                FuelBasedEnergy energy = m_Energy as FuelBasedEnergy;
+                if (energy == null)
+                {
+                    throw new ArgumentException("This car is not fuel based!");
+                }
+
+                return energy.FuelType;
+            }
         }
 
         #endregion
@@ -55,14 +63,14 @@ namespace Ex03.GarageLogic
 
         public void FuelGas(float i_GasAmount, eFuelType i_FuelType)
         {
-            if (m_VehicleType == eVehicleType.FuelBased)
+            FuelBasedEnergy energy = m_Energy as FuelBasedEnergy;
+            if (energy == null)
             {
-                m_FuelBasedCar.FuelGas(i_GasAmount, i_FuelType);
+                throw new ArgumentException("This car is not fuel based!");
             }
-            else
-            {
-                throw new ArgumentException();
-            }
+
+            energy.FuelGas(i_GasAmount, i_FuelType);
+            
         }
 
         #endregion
@@ -75,13 +83,13 @@ namespace Ex03.GarageLogic
 
         public float CurrentBatteryTime
         {
-            get { return m_ElectricCar.CurrentBatteryTime; }
-            set { m_ElectricCar.CurrentBatteryTime = value; }
+            get { return m_Energy.CurrentAmount; }
+            set { m_Energy.CurrentAmount = value; }
         }
 
         public float MaxBatteryTIme
         {
-            get { return m_ElectricCar.MaxBatteryTime; }
+            get { return m_Energy.MaxAmount; }
         }
 
         #endregion
@@ -90,14 +98,14 @@ namespace Ex03.GarageLogic
 
         public void ChargeBattery(float i_ChargingTime)
         {
-            if (m_VehicleType == eVehicleType.Electric)
+            ElectricEnergy energy = m_Energy as ElectricEnergy;
+            if (energy != null)
             {
-                m_ElectricCar.ChargeBattery(i_ChargingTime);
+                energy.ChargeBattery(i_ChargingTime);
             }
             else
             {
-                // TODO: Throw Exception If needed
-                throw new NotImplementedException();
+                throw new ArgumentException("This car is not electric!");
             }
         }
 
@@ -125,18 +133,7 @@ namespace Ex03.GarageLogic
 
         public override float CalcRemainingEnergy()
         {
-            float remainingEnergy = 0;
-
-            if (VehicleType == eVehicleType.FuelBased)
-            {
-                remainingEnergy = m_FuelBasedCar.CalcRemainingEnergy();
-            }
-            else if (VehicleType == eVehicleType.Electric)
-            {
-                remainingEnergy = m_ElectricCar.CalcRemainingEnergy();
-            }
-
-            return remainingEnergy;
+            return m_Energy.CalcRemainigEnergy();
         }
 
         #endregion
@@ -151,15 +148,7 @@ namespace Ex03.GarageLogic
 
             carString.Append(base.ToString());
             carString.AppendLine();
-            if (m_FuelBasedCar != null)
-            {
-                carString.Append(m_FuelBasedCar.ToString());
-            }
-            else if (m_ElectricCar != null)
-            {
-                carString.Append(m_ElectricCar.ToString());
-            }
-
+            carString.Append(m_Energy.ToString());
             carString.AppendLine();
             carString.Append("Car color - ");
             carString.Append(CarColor);

@@ -4,43 +4,36 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class ElectricVehicle : Vehicle
+    public class ElectricEnergy : Energy
     {
         #region Properties
-        private float m_CurrentBatteryTimeAmount;
-        private float m_MaxBatteryTimeAmount;
+        //private float m_CurrentBatteryTimeAmount;
+        //private float m_MaxBatteryTimeAmount;
         #endregion
 
         #region Constructor
-        public ElectricVehicle(string i_ModelName, string i_LicenseNumber, Wheel[] i_Wheels,
-            float i_MaxBatteryTimeAmount) : 
-            base(i_ModelName,  i_LicenseNumber, i_Wheels, eVehicleType.Electric)
+        public ElectricEnergy(float i_MaxBatteryTimeAmount, float i_CurrentBatteryTimeAmount)
         {
-            m_CurrentBatteryTimeAmount = i_MaxBatteryTimeAmount;
-            m_MaxBatteryTimeAmount = i_MaxBatteryTimeAmount;
+            base.MaxAmount = i_MaxBatteryTimeAmount;
+            base.CurrentAmount = i_CurrentBatteryTimeAmount;
         }
         #endregion
 
         #region Getters And Setters
         public float CurrentBatteryTime
         {
-            get { return m_CurrentBatteryTimeAmount; }
-            set { m_CurrentBatteryTimeAmount = value; }
+            get { return CurrentAmount; }
+            set { CurrentAmount = value; }
         }
 
         public float MaxBatteryTime
         {
-            get { return m_MaxBatteryTimeAmount; }
+            get { return MaxAmount; }
         }
         #endregion
 
         #region Methods
-
-        public override float CalcRemainingEnergy()
-        {
-            return CurrentBatteryTime / MaxBatteryTime * 100;
-        }
-
+        
         public virtual void ChargeBattery(float i_ChargingTime)
         {
             if (i_ChargingTime + CurrentBatteryTime > MaxBatteryTime)

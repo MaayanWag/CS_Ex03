@@ -100,7 +100,7 @@ namespace Ex03.GarageLogic
         public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
         {
             Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-            FuelBasedVehicle vehicleToFuel = vehicle as FuelBasedVehicle;
+            FuelBasedEnergy vehicleToFuel = vehicle as FuelBasedEnergy;
 
             if (vehicleToFuel == null)
             {
@@ -117,7 +117,7 @@ namespace Ex03.GarageLogic
         public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
         {
             Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-            ElectricVehicle vehicleToFuel = vehicle as ElectricVehicle;
+            ElectricEnergy vehicleToFuel = vehicle as ElectricEnergy;
 
             if (vehicleToFuel == null)
             {

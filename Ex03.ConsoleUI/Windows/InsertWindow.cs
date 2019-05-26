@@ -398,8 +398,8 @@ namespace Ex03.ConsoleUI.Windows
             {
                 m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 12);
                 
-                FuelBasedVehicle fuelBasedVehicle =
-                    GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                FuelBasedEnergy fuelBasedVehicle =
+                    GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
                 Truck newTruck = GarageMain.CreateTruck(fuelBasedVehicle, m_IsContainsDangerousMaterials, m_TruckCargoVolume);
 
 
@@ -462,15 +462,15 @@ namespace Ex03.ConsoleUI.Windows
 
                 if (m_VehicleType == eVehicleType.FuelBased)
                 {
-                    FuelBasedVehicle fuelBasedVehicle =
-                        GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                    FuelBasedEnergy fuelBasedVehicle =
+                        GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
                     newMotorcycle = GarageMain.CreateMotorcycle(fuelBasedVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
                 }
 
                 if (m_VehicleType == eVehicleType.Electric)
                 {
-                    ElectricVehicle electricVehicle =
-                        GarageMain.CreateElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
+                    ElectricEnergy electricVehicle =
+                        GarageMain.CreateElectricEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
                     newMotorcycle = GarageMain.CreateMotorcycle(electricVehicle, m_MotorCycleLicenseType, m_MotorcycleEngineVolume);
 
                 }
@@ -534,15 +534,15 @@ namespace Ex03.ConsoleUI.Windows
                 
                 if (m_VehicleType == eVehicleType.FuelBased)
                 {
-                    FuelBasedVehicle fuelBasedVehicle =
-                        GarageMain.CreateFuelBasedVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
+                    FuelBasedEnergy fuelBasedVehicle =
+                        GarageMain.CreateFuelBasedEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_FuelType, m_MaxFuelAmount);
                     newCar = GarageMain.CreateCar(fuelBasedVehicle, m_CarColor, m_CarNumberOfDoors);
                 }
 
                 if (m_VehicleType == eVehicleType.Electric)
                 {
-                    ElectricVehicle electricVehicle =
-                        GarageMain.CreateElectricVehicle(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
+                    ElectricEnergy electricVehicle =
+                        GarageMain.CreateElectricEnergy(m_ModelName, m_LicenseNumber, m_Wheels, m_MaxBatteryAmount);
                     newCar = GarageMain.CreateCar(electricVehicle, m_CarColor, m_CarNumberOfDoors);
                 }
 

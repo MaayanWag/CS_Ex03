@@ -41,14 +41,15 @@
     <Compile Include="Vehicls\Car.cs" />
     <Compile Include="Enums\eCarColor.cs" />
     <Compile Include="Enums\eFuelType.cs" />
-    <Compile Include="Vehicls\ElectricVehicle.cs" />
+    <Compile Include="Vehicls\ElectricEnergy.cs" />
     <Compile Include="Enums\eLicenseType.cs" />
     <Compile Include="Enums\eNumberOfDoors.cs" />
     <Compile Include="Enums\eVhicleType.cs" />
     <Compile Include="Garage\Garage.cs" />
     <Compile Include="Enums\eVehicleState.cs" />
+    <Compile Include="Vehicls\Energy.cs" />
     <Compile Include="Vehicls\Motorcycle.cs" />
-    <Compile Include="Vehicls\FuelBasedVehicle.cs" />
+    <Compile Include="Vehicls\FuelBasedEnergy.cs" />
     <Compile Include="Vehicls\Truck.cs" />
     <Compile Include="Vehicls\Vehicle.cs" />
     <Compile Include="Vehicls\Wheel.cs" />
