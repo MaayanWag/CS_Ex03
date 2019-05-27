@@ -165,7 +165,6 @@ namespace Ex03.ConsoleUI
             insertWindow.MainWindow();
         }
         
-
         #endregion
         
         private static string getGarageFunctionalityAsString()

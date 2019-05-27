@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex03.GarageLogic;
+
 
 namespace Ex03.ConsoleUI.Windows
 {
