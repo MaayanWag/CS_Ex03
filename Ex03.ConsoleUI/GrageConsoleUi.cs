@@ -182,11 +182,5 @@ namespace Ex03.ConsoleUI
 
             return garageFunctionality.ToString();
         }
-        
-        private static void clearBuilder(StringBuilder value)
-        {
-            value.Length = 0;
-            value.Capacity = 0;
-        }
     }
 }

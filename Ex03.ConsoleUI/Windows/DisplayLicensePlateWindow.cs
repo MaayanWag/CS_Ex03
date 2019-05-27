@@ -7,7 +7,7 @@ namespace Ex03.ConsoleUI.Windows
 {
     internal class DisplayLicensePlateWindow : Window
     {
-        private List<eVehicleState> m_VehicleState = new List<eVehicleState>();
+        private List<eVehicleState> m_VehicleDesiredStates = new List<eVehicleState>();
 
         public override void MainWindow()
         {
@@ -26,9 +26,13 @@ namespace Ex03.ConsoleUI.Windows
                 {
                     Console.WriteLine(fe.Message);
                 }
+                catch (ArgumentException ae)
+                {
+                    Console.WriteLine(ae.Message);
+                }
             }
 
-            List<string> filteredLicensePlate = Garage.GetAllVehicleLicensePlatesByFilter(m_VehicleState.ToArray());
+            List<string> filteredLicensePlate = Garage.GetAllVehicleLicensePlatesByFilter(m_VehicleDesiredStates.ToArray());
 
             showDesiredStates(filteredLicensePlate);
             ReturnToMainWindow();
@@ -61,11 +65,11 @@ namespace Ex03.ConsoleUI.Windows
                 {
                     if (!char.TryParse(stateStr, out state))
                     {
-                        throw new ArgumentException($"{stateStr} is not a valid input!");
+                        throw new FormatException($"'{stateStr}' is not a valid input!");
                     }
                     else if (state != 'I' && state != 'F' && state != 'P')
                     {
-                        throw new FormatException($"{stateStr} is not a valid input!");
+                        throw new ArgumentException($"'{stateStr}' is not a valid input!");
                     }
 
 
@@ -76,7 +80,7 @@ namespace Ex03.ConsoleUI.Windows
                         throw new FormatException($"'{stateStr}' is not a valid input!");
                     }
 
-                    m_VehicleState.Add(vehicleState);
+                    m_VehicleDesiredStates.Add(vehicleState);
                 }
                 catch (ArgumentException)
                 {

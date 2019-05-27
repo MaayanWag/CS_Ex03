@@ -168,7 +168,7 @@ namespace Ex03.GarageLogic
             catch(KeyNotFoundException)
             {
                 // TODO: throw the currect Exception
-                throw new Exception("Not such vehicle in the garage!");
+                throw new ArgumentException($"The vehicle {i_LicensePlateNumber} is not in the garage!");
             }
 
             return vehicleAndOwnerDetailsByLicensePlate;
