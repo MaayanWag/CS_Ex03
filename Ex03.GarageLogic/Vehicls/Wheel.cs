@@ -16,9 +16,9 @@ namespace Ex03.GarageLogic
 
         #region Constructors
 
-        public Wheel(string i_ManufacturerName, float i_MaxAirPressure)
+        public Wheel(string i_ManufacturerName, float i_MaxAirPressure, float i_CurrentAirPressure)
         {
-            m_CurrentAirPressure = i_MaxAirPressure;
+            m_CurrentAirPressure = i_CurrentAirPressure;
             m_MaxAirPressure = i_MaxAirPressure;
             m_ManufacturerName = i_ManufacturerName;
         }

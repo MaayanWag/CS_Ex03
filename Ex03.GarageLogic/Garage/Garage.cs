@@ -132,7 +132,7 @@ namespace Ex03.GarageLogic
 
         #region Vehcile information functionality #7
 
-        public string DisplayVehicleInformation(string i_VehicleLicensePlate)
+        public static string DisplayVehicleInformation(string i_VehicleLicensePlate)
         {
             Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
             VehicleAndOwnerDetails vehicleAndOwnerDetails = getVehicleDetailesByLicensePlate(i_VehicleLicensePlate);
@@ -210,9 +210,9 @@ namespace Ex03.GarageLogic
             return m_GarageVehicles.ContainsKey(i_Vehicle.LicenceNumber);
         }
 
-        private static bool isVehicleInTheGarage(string i_LicensePlate)
+        public static bool IsVehicleInTheGarageByLicenseNumber(string i_LicenseNumber)
         {
-            return m_GarageVehicles.ContainsKey(i_LicensePlate);
+            return m_GarageVehicles.ContainsKey(i_LicenseNumber);
         }
 
         #endregion

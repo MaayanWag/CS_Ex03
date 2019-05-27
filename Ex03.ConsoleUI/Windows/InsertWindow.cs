@@ -24,6 +24,7 @@ namespace Ex03.ConsoleUI.Windows
         private int m_MotorcycleEngineVolume;
         private int m_TruckCargoVolume;
         private float m_WheelMaxAirPressure;
+        private float m_WheelCurrentAirPressure;
         private float m_CurrentBatteryTimeAmount;
         private float m_MaxBatteryTimeAmount;
         private float m_MaxFuelAmount;
@@ -99,6 +100,23 @@ namespace Ex03.ConsoleUI.Windows
             {
                 m_IsInputValid = false;
                 getWheelManufacturer();
+            }
+            
+            // Get current Air pressure
+            Console.Clear();
+            Console.WriteLine("You chose to insert a new Vehicle.");
+            m_IsInputValid = false;
+            while (!m_IsInputValid)
+            {
+                try
+                {
+                    m_IsInputValid = false;
+                    getWheelCurrentAirPressure();
+                }
+                catch (FormatException fe)
+                {
+                    Console.WriteLine(fe.Message);
+                }
             }
 
             // Get max Air pressure
@@ -469,7 +487,7 @@ namespace Ex03.ConsoleUI.Windows
         {
             try
             {
-                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 12);
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, m_WheelCurrentAirPressure, 12);
                 FuelBasedEnergy fuelBasedEnergy = GarageMain.CreateFuelBasedEnergy(m_FuelType, m_MaxFuelAmount, m_CurrentFuelAmount);
                 Truck newTruck = GarageMain.CreateTruck(fuelBasedEnergy, m_Wheels, m_LicenseNumber, m_ModelName, 
                     m_IsContainsDangerousMaterials, m_TruckCargoVolume);
@@ -527,7 +545,7 @@ namespace Ex03.ConsoleUI.Windows
         {
             try
             {
-                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 2);
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, m_WheelCurrentAirPressure, 2);
                 Motorcycle newMotorcycle = null;
 
                 if (m_VehicleType == eVehicleType.FuelBased)
@@ -600,7 +618,7 @@ namespace Ex03.ConsoleUI.Windows
         {
             try
             {
-                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, 4);
+                m_Wheels = GarageMain.CreateWheels(m_WheelManufacturer, m_WheelMaxAirPressure, m_WheelCurrentAirPressure, 4);
                 Car newCar = null;
                 
                 if (m_VehicleType == eVehicleType.FuelBased)
@@ -834,6 +852,23 @@ namespace Ex03.ConsoleUI.Windows
             catch (FormatException)
             {
                 throw new FormatException($"'{wheelMaxAirPressure}' is not a valid input!");
+            }
+
+            m_IsInputValid = true;
+        }
+
+        private void getWheelCurrentAirPressure()
+        {
+            Console.Write("Please insert vehicle wheel manufacturer current air pressure (and then press enter): ");
+            string wheelCurrentAirPressure = Console.ReadLine();
+
+            try
+            {
+                m_WheelCurrentAirPressure = float.Parse(wheelCurrentAirPressure);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException($"'{wheelCurrentAirPressure}' is not a valid input!");
             }
 
             m_IsInputValid = true;

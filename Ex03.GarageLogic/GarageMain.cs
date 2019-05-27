@@ -42,6 +42,11 @@ namespace Ex03.GarageLogic
 
         public static FuelBasedEnergy CreateFuelBasedEnergy(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
         {
+            if (i_MaxFuelAmount < i_CurrentFuelAmount)
+            {
+                throw new ValueOutOfRangeException(i_CurrentFuelAmount, i_MaxFuelAmount, 0.0f);
+            }
+
             FuelBasedEnergy fuelEnergy = new FuelBasedEnergy(i_FuelType, i_MaxFuelAmount, i_CurrentFuelAmount);
 
             return fuelEnergy;
@@ -49,6 +54,11 @@ namespace Ex03.GarageLogic
 
         public static ElectricEnergy CreateElectricEnergy(float i_MaxBatteryTimeAmount, float i_CurrentBatteryTimeAmount)
         {
+            if (i_MaxBatteryTimeAmount < i_CurrentBatteryTimeAmount)
+            {
+                throw new ValueOutOfRangeException(i_CurrentBatteryTimeAmount, i_MaxBatteryTimeAmount, 0.0f);
+            }
+
             ElectricEnergy electricEnergy = new ElectricEnergy(i_MaxBatteryTimeAmount, i_CurrentBatteryTimeAmount);
 
             return electricEnergy;
@@ -123,13 +133,13 @@ namespace Ex03.GarageLogic
 
         #region Create Wheels
 
-        public static Wheel[] CreateWheels(string i_ManufacturerName, float i_MaxAirPressure, int i_NumberOfWheels)
+        public static Wheel[] CreateWheels(string i_ManufacturerName, float i_MaxAirPressure, float i_CurrentAirPressure, int i_NumberOfWheels)
         {
             Wheel[] newWheels = new Wheel[i_NumberOfWheels];
 
             for (int i = 0; i < newWheels.Length; i++)
             {
-                newWheels[i] = new Wheel(i_ManufacturerName, i_MaxAirPressure);
+                newWheels[i] = new Wheel(i_ManufacturerName, i_MaxAirPressure, i_CurrentAirPressure);
             }
 
             return newWheels;

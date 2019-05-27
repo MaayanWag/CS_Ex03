@@ -171,13 +171,14 @@ namespace Ex03.ConsoleUI
         {
             StringBuilder garageFunctionality = new StringBuilder();
 
-            garageFunctionality.Append($"To insert a new Vehicle - press 1{Environment.NewLine}");
-            garageFunctionality.Append($"To display all license plate in the garage by specific state press - 2{Environment.NewLine}");
-            garageFunctionality.Append($"To change a Vehicle state - press 3{Environment.NewLine}");
-            garageFunctionality.Append($"To inflate Vehicle tires - press 4{Environment.NewLine}");
-            garageFunctionality.Append($"To refuel a Fuel based vehicle - press 5{Environment.NewLine}");
-            garageFunctionality.Append($"To charge an Electric based vehicle - press 6{Environment.NewLine}");
-            garageFunctionality.Append($"To display vehicle information - press 7{Environment.NewLine}");
+            garageFunctionality.Append($"Welcome :) {Environment.NewLine}{Environment.NewLine}");
+            garageFunctionality.Append($"1. To insert a new Vehicle - press 1{Environment.NewLine}");
+            garageFunctionality.Append($"2. To display all license plate in the garage by specific state press - 2{Environment.NewLine}");
+            garageFunctionality.Append($"3. To change a Vehicle state - press 3{Environment.NewLine}");
+            garageFunctionality.Append($"4. To inflate Vehicle tires - press 4{Environment.NewLine}");
+            garageFunctionality.Append($"5. To refuel a Fuel based vehicle - press 5{Environment.NewLine}");
+            garageFunctionality.Append($"6. To charge an Electric based vehicle - press 6{Environment.NewLine}");
+            garageFunctionality.Append($"7. To display vehicle information - press 7{Environment.NewLine}");
 
             return garageFunctionality.ToString();
         }
