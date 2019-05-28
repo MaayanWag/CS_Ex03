@@ -167,7 +167,6 @@ namespace Ex03.GarageLogic
             }
             catch(KeyNotFoundException)
             {
-                // TODO: throw the currect Exception
                 throw new ArgumentException($"The vehicle with license number '{i_LicensePlateNumber}' is not in the garage!");
             }
 
