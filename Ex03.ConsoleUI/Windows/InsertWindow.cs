@@ -696,7 +696,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getTruckContainDangerousMaterialsStatus()
         {
-            Console.Write("Please insert if truck contains dangerous materials <True, False>(and then press enter): ");
+            Console.Write("Please insert if truck contains dangerous materials <True, False> (and then press enter): ");
             string isContainsDangerousMaterials = Console.ReadLine();
 
             try
@@ -736,8 +736,8 @@ namespace Ex03.ConsoleUI.Windows
             licenseType.AppendLine("Press 2 for A1");
             licenseType.AppendLine("Press 3 for A2");
             licenseType.AppendLine("Press 4 for B");
-            licenseType.AppendLine("(and then press enter)");
-            Console.WriteLine($"{licenseType}: ");
+            licenseType.Append("(and then press enter)");
+            Console.Write($"{licenseType}: ");
             string motorCycleLicenseType = Console.ReadLine();
 
             try
@@ -785,8 +785,8 @@ namespace Ex03.ConsoleUI.Windows
             carColorNumber.AppendLine("Press 2 for Blue");
             carColorNumber.AppendLine("Press 3 for Black");
             carColorNumber.AppendLine("Press 4 for Gray");
-            carColorNumber.AppendLine("(and then press enter)");
-            Console.WriteLine($"{carColorNumber}: ");
+            carColorNumber.Append("(and then press enter)");
+            Console.Write($"{carColorNumber}: ");
             string carColor = Console.ReadLine();
 
             try

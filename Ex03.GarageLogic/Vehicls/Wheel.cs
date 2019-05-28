@@ -47,11 +47,11 @@ namespace Ex03.GarageLogic
 
         #region Methods
 
-        public void InflateAction()
+        public static void InflateAction(ref Wheel wheel)
         {
-            CurrentAirPressure = MaxAirPressure;
+            wheel.CurrentAirPressure = wheel.MaxAirPressure;
         }
-
+        
         #endregion
 
         #region To String

@@ -87,9 +87,9 @@ namespace Ex03.GarageLogic
             Vehicle vehicleToInflateTo = getVehicleDetailesByLicensePlate(i_VehicleLicensePlate).Vehicle;
             Wheel[] vehicleWheels = vehicleToInflateTo.Wheels;
 
-            foreach (Wheel vehicleWheel in vehicleWheels)
+            for (int i = 0; i < vehicleWheels.Length; i++)
             {
-                vehicleWheel.InflateAction();
+                Wheel.InflateAction(ref vehicleWheels[i]);
             }
         }
 

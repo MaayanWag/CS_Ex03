@@ -1,0 +1,10 @@
+==========================Exercise Checking Report==========================
+Exercise No...........: 02
+First Student Details.: 312275431 - Maayan Wagenheim
+Second Student Details: 204623284 - Yarden Rachamim
+Delivery Date.........: 28.5.19
+Delivered In Delay....:  No
+Delay Reason..........: ---
+Visual Studio Version.: 2017
+Comments..............: ---
+=======================End Exercise Checking Report=========================

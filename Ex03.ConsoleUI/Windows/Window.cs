@@ -14,9 +14,12 @@ namespace Ex03.ConsoleUI.Windows
 
         public virtual void ReturnToMainWindow()
         {
-            Console.WriteLine("Press enter to continue");
+            Console.WriteLine("");
+            Console.WriteLine("Press enter to continue..");
             Console.ReadLine();
             GarageConsoleUi.MainWindow();
         }
+
+
     }
 }

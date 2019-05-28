@@ -77,7 +77,6 @@ namespace Ex03.GarageLogic
 
         public override bool Equals(object obj)
         {
-            // TODO: is it the right comparing logic?
             bool isEqual = false;
             Vehicle toCompare = obj as Vehicle;
 
@@ -121,7 +120,7 @@ namespace Ex03.GarageLogic
                 vechileString.Append(m_Wheels[i].ToString());
                 vechileString.AppendLine();
             }
-
+            
             return vechileString.ToString();
         }
 

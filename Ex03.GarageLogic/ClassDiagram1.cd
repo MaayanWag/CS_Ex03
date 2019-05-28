@@ -1,32 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Ex03.GarageLogic.Vehicle">
-    <Position X="1.5" Y="1.75" Width="1.5" />
+    <Position X="9" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAEAAQAAAEAAAAEgAAEEAAAAIAgAIAQAABIAAgCAgA=</HashCode>
       <FileName>Vehicls\Vehicle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ex03.GarageLogic.Truck">
-    <Position X="5.5" Y="1" Width="1.5" />
+    <Position X="9" Y="4.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Ex03.GarageLogic.Vehicle" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.125" Y="4.045" />
+        <Point X="10.125" Y="4.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAEAAAAAAAABAAAAAAAEABABAgACgA=</HashCode>
       <FileName>Vehicls\Truck.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ex03.GarageLogic.Motorcycle">
-    <Position X="5.5" Y="4.75" Width="1.5" />
+    <Position X="12" Y="4.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAgAABAAAAAAAEAAAAoAAgBAAAAABAEABAhAAAAgA=</HashCode>
       <FileName>Vehicls\Motorcycle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Ex03.GarageLogic.Car">
-    <Position X="7.25" Y="3.5" Width="1.5" />
+    <Position X="6.75" Y="4.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Ex03.GarageLogic.Vehicle" FixedFromPoint="true">
+      <Path>
+        <Point X="10.125" Y="4.045" />
+        <Point X="10.125" Y="4.51" />
+        <Point X="7.625" Y="4.51" />
+        <Point X="7.625" Y="4.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAgMAAAAAAAQAEAAAAgAAABAAAAABAEABABAAAAwA=</HashCode>
       <FileName>Vehicls\Car.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Ex03.GarageLogic.ElectricEnergy">
+    <Position X="1.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAEAAAAgAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Vehicls\ElectricEnergy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ex03.GarageLogic.Energy">
+    <Position X="2.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAIAAAAgAAAAAAAAAAAAAAABIAAAA=</HashCode>
+      <FileName>Vehicls\Energy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ex03.GarageLogic.FuelBasedEnergy">
+    <Position X="3.75" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAEAAAAAAAABAAAAAAAEAAABAAAAgA=</HashCode>
+      <FileName>Vehicls\FuelBasedEnergy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Ex03.GarageLogic.Wheel">
+    <Position X="5.25" Y="1.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACEAAAACAIAAAAAAAAAQAAAEAAAgAg=</HashCode>
+      <FileName>Vehicls\Wheel.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
