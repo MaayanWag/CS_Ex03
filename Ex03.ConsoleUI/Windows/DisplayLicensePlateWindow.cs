@@ -13,6 +13,7 @@ namespace Ex03.ConsoleUI.Windows
         {
             Console.Clear();
             showMainMessage();
+
             // Get requested states
             m_IsInputValid = false;
             while (!m_IsInputValid)
@@ -96,10 +97,10 @@ namespace Ex03.ConsoleUI.Windows
             StringBuilder mainMsg = new StringBuilder();
             mainMsg.AppendLine("You chose to view the license plate in the garage.");
             mainMsg.AppendLine("You can filter By 3 Options:");
-            mainMsg.AppendLine("P - for all the cars that there Owner already paid for them.");
-            mainMsg.AppendLine("F - for all the cars that already fixed.");
-            mainMsg.AppendLine("I - for all the cars that currently during repairing.");
-            mainMsg.AppendLine("Please insert the the requested states P, F or I (and then press Enter)");
+            mainMsg.AppendLine("  P - for all the cars that there Owner already paid for them.");
+            mainMsg.AppendLine("  F - for all the cars that already fixed.");
+            mainMsg.AppendLine("  I - for all the cars that currently during repairing.");
+            mainMsg.AppendLine("Please insert the the requested states P, F or I: ");
 
             Console.WriteLine(mainMsg.ToString());
         }

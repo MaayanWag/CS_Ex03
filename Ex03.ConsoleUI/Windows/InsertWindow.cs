@@ -171,7 +171,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getOwnerPhoneNumber()
         {
-            Console.Write("Please insert owner phone number (and then press enter): ");
+            Console.Write("Please insert owner phone number: ");
             m_OwnerPhoneNumber = Console.ReadLine();
             foreach(char digit in m_OwnerPhoneNumber)
             {
@@ -185,7 +185,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getOwnerName()
         {
-            Console.Write("Please insert owner name (and then press enter): ");
+            Console.Write("Please insert owner name: ");
             m_OwnerName = Console.ReadLine();
             foreach(char letter in m_OwnerName)
             {
@@ -284,7 +284,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getFuelCurrentAmount()
         {
-            Console.Write("Please insert the current fuel amount (and then press enter): ");
+            Console.Write("Please insert the current fuel amount: ");
             string currentFuelAmount = Console.ReadLine();
 
             try
@@ -301,7 +301,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getFuelMaxAmount()
         {
-            Console.Write("Please insert the maximum fuel amount (and then press enter): ");
+            Console.Write("Please insert the maximum fuel amount: ");
             string maxFuelAmount = Console.ReadLine();
 
             try
@@ -324,8 +324,8 @@ namespace Ex03.ConsoleUI.Windows
             fuelType.AppendLine("Press 2 for Octan95");
             fuelType.AppendLine("Press 3 for Octan96");
             fuelType.AppendLine("Press 4 for Octan98");
-            fuelType.AppendLine("(and then press enter)");
-            Console.WriteLine($"{fuelType}: ");
+            fuelType.Append("(and then press enter)");
+            Console.Write($"{fuelType}: ");
             string fuelTypeStr = Console.ReadLine();
 
             try
@@ -412,7 +412,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getCurrentBatteryAmount()
         {
-            Console.Write("Please insert Current battery time (and then press enter): ");
+            Console.Write("Please insert Current battery time: ");
             string currentBatteryAmount = Console.ReadLine();
 
             try
@@ -429,7 +429,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getMaxBatteryAmount()
         {
-            Console.Write("Please insert Max battery time (and then press enter): ");
+            Console.Write("Please insert Max battery time: ");
             string maxBatteryAmount = Console.ReadLine();
 
             try
@@ -492,6 +492,8 @@ namespace Ex03.ConsoleUI.Windows
                 Truck newTruck = GarageMain.CreateTruck(fuelBasedEnergy, m_Wheels, m_LicenseNumber, m_ModelName, 
                     m_IsContainsDangerousMaterials, m_TruckCargoVolume);
                 Garage.AddNewVehicle(newTruck, m_OwnerName, m_OwnerPhoneNumber);
+                vehicleAddedSuccessfullyMessage();
+
             }
             catch (ArgumentException ae)
             {
@@ -565,6 +567,7 @@ namespace Ex03.ConsoleUI.Windows
                 }
                 
                 Garage.AddNewVehicle(newMotorcycle, m_OwnerName, m_OwnerPhoneNumber);
+                vehicleAddedSuccessfullyMessage();
             }
             catch (ArgumentException ae)
             {
@@ -639,6 +642,7 @@ namespace Ex03.ConsoleUI.Windows
                 }
 
                 Garage.AddNewVehicle(newCar, m_OwnerName, m_OwnerPhoneNumber);
+                vehicleAddedSuccessfullyMessage();
             }
             catch (ArgumentException ae)
             {
@@ -649,9 +653,15 @@ namespace Ex03.ConsoleUI.Windows
             }
         }
 
+        private void vehicleAddedSuccessfullyMessage()
+        {
+            Console.Clear();
+            Console.WriteLine($"Vehicle with license number '{m_LicenseNumber}' added successfully :){Environment.NewLine}");
+        }
+
         private void getTruckCargoVolume()
         {
-            Console.Write("Please insert truck cargo volume (and then press enter): ");
+            Console.Write("Please insert truck cargo volume: ");
             string truckCargoVolume = Console.ReadLine();
 
             try
@@ -685,7 +695,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getMotorCycleEngineVolume()
         {
-            Console.Write("Please insert Motorcycle engine volume (and then press enter): ");
+            Console.Write("Please insert Motorcycle engine volume: ");
             string motorcycleEngineVolume = Console.ReadLine();
 
             try
@@ -730,7 +740,7 @@ namespace Ex03.ConsoleUI.Windows
         
         private void getCarNumberOfDoors()
         {
-            Console.Write("Please insert the number of Car doors <2-5> (and then press enter): ");
+            Console.Write("Please insert the number of Car doors <2-5>: ");
             string carNumberOfDoors = Console.ReadLine();
 
             try
@@ -779,7 +789,10 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getFuelBasedVehicleClass()
         {
-            Console.Write("Please insert 1 for Car OR 2 for Truck OR 3 for a Motorcycle");
+            Console.WriteLine("Please select the desired vehicle: ");
+            Console.WriteLine("1 for Car");
+            Console.WriteLine("2 for Truck");
+            Console.WriteLine("3 for Motorcycle");
             string vheicleClass = Console.ReadLine();
 
             try
@@ -842,7 +855,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getWheelMaxAirPressure()
         {
-            Console.Write("Please insert vehicle wheel manufacturer max air pressure (and then press enter): ");
+            Console.Write("Please insert vehicle wheel manufacturer max air pressure: ");
             string wheelMaxAirPressure = Console.ReadLine();
 
             try
@@ -859,7 +872,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getWheelCurrentAirPressure()
         {
-            Console.Write("Please insert vehicle wheel manufacturer current air pressure (and then press enter): ");
+            Console.Write("Please insert vehicle wheel manufacturer current air pressure: ");
             string wheelCurrentAirPressure = Console.ReadLine();
 
             try
@@ -876,18 +889,18 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getWheelManufacturer()
         {
-            Console.Write("Please insert vehicle wheel manufacturer (and then press enter): ");
+            Console.Write("Please insert vehicle wheel manufacturer: ");
             m_WheelManufacturer = Console.ReadLine();
             m_IsInputValid = true;
         }
 
         private void getLicenseNumber()
         {
-            Console.Write("Please insert vehicle license number (and then press enter): ");
+            Console.Write("Please insert vehicle license number: ");
             m_LicenseNumber = Console.ReadLine();
             try
             {
-                InputValidations.CheckIfLicensePlateIsValid(m_LicenseNumber);
+                InputValidations.CheckIfLicenseNumberIsValid(m_LicenseNumber);
                 m_IsInputValid = true;
             }
             catch (FormatException fe)
@@ -898,7 +911,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getModelName()
         {
-            Console.Write("Please insert vehicle model name (and then press enter): ");
+            Console.Write("Please insert vehicle model name: ");
             m_ModelName = Console.ReadLine();
             m_IsInputValid = true;
         }

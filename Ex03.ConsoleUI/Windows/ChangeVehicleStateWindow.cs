@@ -12,22 +12,15 @@ namespace Ex03.ConsoleUI.Windows
 
         public override void MainWindow()
         {
-            
             Console.Clear();
             showMainMessage();
+
             // Get license number
             m_IsInputValid = false;
             while (!m_IsInputValid)
             {
-                try
-                {
-                    m_IsInputValid = false;
-                    getLicenseNumber();
-                }
-                catch (FormatException fe)
-                {
-                    Console.WriteLine(fe.Message);
-                }
+                m_IsInputValid = false;
+                getLicenseNumber();
             }
 
             // Get desired state name
@@ -64,7 +57,7 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getDesiredNewState()
         {
-            Console.Write("Please insert the the requested state P, F or I (and then press Enter): ");
+            Console.Write("Please insert the requested state P, F or I: ");
             string desiredStatesStr = Console.ReadLine();;
             char state;
 
@@ -97,11 +90,11 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getLicenseNumber()
         {
-            Console.Write("Please insert vehicle license number (and then press enter): ");
+            Console.Write("Please insert vehicle license number ");
             m_LicenseNumber = Console.ReadLine();
             try
             {
-                InputValidations.CheckIfLicensePlateIsValid(m_LicenseNumber);
+                InputValidations.CheckIfLicenseNumberIsValid(m_LicenseNumber);
                 m_IsInputValid = true;
             }
             catch (FormatException fe)

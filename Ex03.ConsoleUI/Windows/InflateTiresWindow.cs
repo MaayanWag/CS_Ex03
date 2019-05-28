@@ -22,7 +22,7 @@ namespace Ex03.ConsoleUI.Windows
                     m_IsInputValid = false;
                     getLicenseNumber();
                     Garage.InflateTiresToMaximum(m_VehicleLicensePlate);
-                    Console.WriteLine($"Tires been inflated for {m_VehicleLicensePlate}");
+                    Console.WriteLine($"Tires been inflated for vehicle with license number '{m_VehicleLicensePlate}'");
                 }
                 catch (FormatException fe)
                 {
@@ -39,11 +39,11 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getLicenseNumber()
         {
-            Console.Write("Please insert vehicle license number (and then press enter): ");
+            Console.Write("Please insert vehicle license number: ");
             m_VehicleLicensePlate = Console.ReadLine();
             try
             {
-                InputValidations.CheckIfLicensePlateIsValid(m_VehicleLicensePlate);
+                InputValidations.CheckIfLicenseNumberIsValid(m_VehicleLicensePlate);
                 m_IsInputValid = true;
             }
             catch (FormatException fe)

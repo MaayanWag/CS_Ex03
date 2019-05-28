@@ -11,10 +11,10 @@ namespace Ex03.ConsoleUI.Windows
 
         public override void MainWindow()
         {
-            //TODO: continue
             Console.Clear();
             showMainMessage();
-            // Get requested states
+
+            // Get requested License number
             m_IsInputValid = false;
             while (!m_IsInputValid)
             {
@@ -52,24 +52,24 @@ namespace Ex03.ConsoleUI.Windows
 
         private void getDesiredLicenseNumber()
         {
-            string desiredicenseNumberStr = Console.ReadLine();
-            int licenseNumber;
-
-            if (!int.TryParse(desiredicenseNumberStr, out licenseNumber))
+            Console.Write("Please insert vehicle license number: ");
+            m_DesiredLicenseNumber = Console.ReadLine();
+            try
             {
-                throw new FormatException("This license number should be numbers only");
+                InputValidations.CheckIfLicenseNumberIsValid(m_DesiredLicenseNumber);
+                m_IsInputValid = true;
             }
-
-            m_DesiredLicenseNumber = desiredicenseNumberStr;
-            m_IsInputValid = true;
+            catch (FormatException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
         }
 
         private void showMainMessage()
         {
             StringBuilder mainMsg = new StringBuilder();
             mainMsg.AppendLine("You chose to view display vehicle information in the garage.");
-            mainMsg.AppendLine("Enter the license nubmer of the desired vehicle");
-
+            
             Console.WriteLine(mainMsg.ToString());
         }
     }

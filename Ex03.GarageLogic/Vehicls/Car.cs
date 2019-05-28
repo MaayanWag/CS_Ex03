@@ -8,7 +8,6 @@ namespace Ex03.GarageLogic
     public class Car : Vehicle
     {
         #region Properties
-        private Energy m_Energy = null;
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;
 
@@ -18,11 +17,10 @@ namespace Ex03.GarageLogic
 
         public Car(Energy i_Energy, Wheel[] i_Wheels, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, string i_ModelName,
             string i_LicenseNumber, eVehicleType i_VehicleType ) 
-            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_VehicleType)
+            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_Energy, i_VehicleType)
         {
             m_CarColor = i_CarColor;
             m_NumberOfDoors = i_NumberOfDoors;
-            m_Energy = i_Energy;
         }
 
         #endregion

@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
         {
             if (i_FuelType != FuelType)
             {
-                string errorMessage = $"Fuel Type '{i_FuelType}' is not correct. Should be '{FuelType}' only.";
+                string errorMessage = $"Fuel Type '{i_FuelType}' is not correct. Should be '{FuelType}' only for this vehicle.";
                 throw new ArgumentException(errorMessage);
             }
             else if(CurrentFuelAmount + i_GasAmount > MaxFuelAmount)

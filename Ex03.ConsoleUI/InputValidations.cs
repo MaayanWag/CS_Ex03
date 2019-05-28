@@ -45,7 +45,7 @@ namespace Ex03.ConsoleUI
             return isUserInstructionValid;
         }
 
-        public static void CheckIfLicensePlateIsValid(string i_LicensePlateNumber)
+        public static void CheckIfLicenseNumberIsValid(string i_LicensePlateNumber)
         {
             foreach (char licenseDigit in i_LicensePlateNumber)
             {

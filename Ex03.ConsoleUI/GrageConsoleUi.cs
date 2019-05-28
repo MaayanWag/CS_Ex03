@@ -65,69 +65,13 @@ namespace Ex03.ConsoleUI
         #endregion
 
         #region Instructions Functionality
-
-        #region Charge Battery Functionality
+        
 
         private static void chargeBatteryFunctionality()
         {
-            Console.Clear();
-            bool isInputValid = false;
-            StringBuilder chargeBatteryMsgBuilder = new StringBuilder();
-
-            while (!isInputValid)
-            {
-                Exception inputException = new Exception();
-
-                try
-                {
-                    chargeBatteryMsgBuilder.AppendLine("You chose to charge A vehicle battery");
-                    chargeBatteryMsgBuilder.AppendLine(
-                        "Please insert vehicle license plate and amount of minutes to charge");
-                    string chargeBatteryMsg = chargeBatteryMsgBuilder.ToString();
-
-                    Console.WriteLine(chargeBatteryMsg);
-                    Console.Write("Vehicle License Plate Number: ");
-                    string licensePlateNumberStr = Console.ReadLine();
-
-                    //checkIfLicensePlateIsValid(licensePlateNumberStr);
-                    Console.Write("Amount Of Minutes To Charge: ");
-                    string amountOfMinutesToChargeStr = Console.ReadLine();
-
-                    if (!isInputValid)
-                    {
-                        Console.Clear();
-                        string errMsg = "";
-                        Console.WriteLine(errMsg);
-                        throw new NotImplementedException();
-                    }
-                }
-                catch (FormatException fe)
-                {
-                    inputException = fe;
-                }
-                catch (ArgumentException ae)
-                {
-                    inputException = ae;
-                }
-                catch (Exception ex)
-                {
-                    inputException = ex;
-                }
-
-                if (!isInputValid)
-                {
-                    Console.Clear();
-                    continue;
-                }
-            }
+            ChargeBatteryWindow chargeBatteryWindow = new ChargeBatteryWindow();
+            chargeBatteryWindow.MainWindow();
         }
-
-        private static bool checkIfAmountOfMinutesIsValid(string i_AmountOfMinutesToChargeStr)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
         private static void displayLicensePlateFunctionality()
         {
@@ -171,7 +115,8 @@ namespace Ex03.ConsoleUI
         {
             StringBuilder garageFunctionality = new StringBuilder();
 
-            garageFunctionality.Append($"Welcome :) {Environment.NewLine}{Environment.NewLine}");
+            garageFunctionality.Append($"Welcome :) ");
+            garageFunctionality.Append($"{ Environment.NewLine} { Environment.NewLine}");
             garageFunctionality.Append($"1. To insert a new Vehicle - press 1{Environment.NewLine}");
             garageFunctionality.Append($"2. To display all license plate in the garage by specific state press - 2{Environment.NewLine}");
             garageFunctionality.Append($"3. To change a Vehicle state - press 3{Environment.NewLine}");

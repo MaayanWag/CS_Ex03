@@ -7,8 +7,7 @@ namespace Ex03.GarageLogic
     public class Motorcycle : Vehicle
     {
         #region Properties
-
-        private Energy m_Energy = null;
+        
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
@@ -18,11 +17,10 @@ namespace Ex03.GarageLogic
 
         public Motorcycle(Energy i_Energy, Wheel[] i_Wheels, string i_LicenseNumber,
             eLicenseType i_LicenseType, int i_EngineVolume, string i_ModelName, eVehicleType i_VehicleType)
-            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_VehicleType)
+            : base(i_ModelName, i_LicenseNumber, i_Wheels, i_Energy, i_VehicleType)
         {
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
-            m_Energy = i_Energy;
         }
 
         #endregion

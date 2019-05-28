@@ -20,7 +20,7 @@ namespace Ex03.GarageLogic
             string errorMessage = "";
             if (isVehicleInTheGarage(i_vehicle))
             {
-                errorMessage = $"This vehicle exist in the garage. Changing the vehicle state to 'InRepair'.";
+                errorMessage = $"{Environment.NewLine}This vehicle exist in the garage. Changing the vehicle state to 'InRepair'.";
                 updateVehicleAndOwnerDetails(i_vehicle, i_OwnerName, i_OwnerPhoneNumber, eVehicleState.InRepair);
                 throw new ArgumentException(errorMessage);
             }
@@ -97,36 +97,36 @@ namespace Ex03.GarageLogic
 
         #region Refuel Functionality #5
 
-        //public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
-        //{
-        //    Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-        //    FuelBasedEnergy vehicleToFuel = vehicle as FuelBasedEnergy;
+        public static void RefuelFuelBasedVehicle(string i_VehicleLicensePlate, eFuelType i_FuelType, float i_AmountToFuel)
+        {
+            Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
+            FuelBasedEnergy EnergyToFuel = vehicle.Energy as FuelBasedEnergy;
 
-        //    if (vehicleToFuel == null)
-        //    {
-        //        throw new ArgumentException("Only Fuel Based Vehicles are accepted.");
-        //    }
+            if (EnergyToFuel == null)
+            {
+                throw new ArgumentException("Only Fuel Based Vehicles are accepted.");
+            }
 
-        //    vehicleToFuel.FuelGas(i_AmountToFuel, i_FuelType);
-        //}
+            EnergyToFuel.FuelGas(i_AmountToFuel, i_FuelType);
+        }
 
         #endregion
 
         #region ChargeVehicle functionality #6
 
-        //public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
-        //{
-        //    Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
-            
-        //    ElectricEnergy vehicleToFuel = vehicle as ElectricEnergy;
+        public static void ChargeVehicle(string i_VehicleLicensePlate, float i_AmountToCharge)
+        {
+            Vehicle vehicle = getVehicleByLicensePlate(i_VehicleLicensePlate);
 
-        //    if (vehicleToFuel == null)
-        //    {
-        //        throw new ArgumentException("Only Electric Based Vehicles are accepted.");
-        //    }
+            ElectricEnergy EnergyToCharge = vehicle.Energy as ElectricEnergy;
 
-        //    vehicleToFuel.ChargeBattery(i_AmountToCharge);
-        //}
+            if (EnergyToCharge == null)
+            {
+                throw new ArgumentException("Only Electric Based Vehicles are accepted.");
+            }
+
+            EnergyToCharge.ChargeBattery(i_AmountToCharge);
+        }
 
         #endregion
 
@@ -168,7 +168,7 @@ namespace Ex03.GarageLogic
             catch(KeyNotFoundException)
             {
                 // TODO: throw the currect Exception
-                throw new ArgumentException($"The vehicle {i_LicensePlateNumber} is not in the garage!");
+                throw new ArgumentException($"The vehicle with license number '{i_LicensePlateNumber}' is not in the garage!");
             }
 
             return vehicleAndOwnerDetailsByLicensePlate;
